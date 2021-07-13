@@ -1,4 +1,5 @@
 const express = require('express');
+const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
 const port = 8000;
 
@@ -7,6 +8,8 @@ const app = express();
 //setting up the view engine to ejs
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
+
+app.use(expressEjsLayouts);
 
 // import the router module for use
 var router = require('./routes/home');

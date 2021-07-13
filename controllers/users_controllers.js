@@ -2,5 +2,7 @@
 
 // this is callback function used by users route file
 module.exports.profile = (req,res)=>{
-    return res.end('<h1>User Profile page loaded!</h1>')
+    return res.render('profile',{
+        title: "Profile"
+    });
 };

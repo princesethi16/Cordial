@@ -11,6 +11,6 @@ router.get('/profile',userController.profile);
 // router.use()
 // for posts of profile loaded**********
 
-router.use('/posts', require('./posts'));
+router.use('/profile/posts', require('./posts'));
 
 module.exports = router; //used by the home route file

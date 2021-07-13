@@ -3,5 +3,7 @@
 //syntax:= module.exports.actionName = func(req,res){.......code.....};
 
 module.exports.home = (req,res)=>{
-    return res.end('<h1>Cordial is Up and Running</h1>');
+    return res.render('home',{
+        title: "Home"
+    });
 };
