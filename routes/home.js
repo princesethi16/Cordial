@@ -13,4 +13,6 @@ router.get('/', homeController.home);
 // Users**********
 router.use('/users',require('./users')); 
 
+router.use('/authentication',require('./signInUp'));
+
 module.exports = router;

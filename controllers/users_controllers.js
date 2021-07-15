@@ -6,3 +6,15 @@ module.exports.profile = (req,res)=>{
         title: "Profile"
     });
 };
+
+// create new account of user
+module.exports.create = (req,res)=>{
+    // to do later :=> logic
+    // create route later
+};
+
+// create new session for existing user
+module.exports.createSession = (req,res)=>{
+    // to do later :=> logic
+    // create route later
+};

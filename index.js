@@ -3,6 +3,7 @@ const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
 const port = 8000;
 const db = require('./config/mongoose');
+const UserDb = require('./models/userSchema');
 
 const app = express();
 
