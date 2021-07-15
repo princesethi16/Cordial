@@ -15,4 +15,6 @@ router.use('/profile/posts', require('./posts'));
 
 router.post('/create', userController.create);
 
+router.post('/create-session',userController.createSession);
+
 module.exports = router; //used by the home route file
