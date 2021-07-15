@@ -28,7 +28,6 @@ module.exports.create = (req,res)=>{
 
     });
 
-    // create route later
 };
 
 // create new session for existing user
