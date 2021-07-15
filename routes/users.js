@@ -13,4 +13,6 @@ router.get('/profile',userController.profile);
 
 router.use('/profile/posts', require('./posts'));
 
+router.post('/create', userController.create);
+
 module.exports = router; //used by the home route file

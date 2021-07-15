@@ -7,4 +7,5 @@ var signInUpController = require('../controllers/signInUp_controller');
 router.get('/sign-in', signInUpController.signIn);
 router.get('/sign-up', signInUpController.signUp);
 
+
 module.exports = router;

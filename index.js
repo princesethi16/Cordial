@@ -4,9 +4,16 @@ const path = require('path');
 const port = 8000;
 const db = require('./config/mongoose');
 const UserDb = require('./models/userSchema');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 
+// telling app to use cookie parser
+app.use(cookieParser());
+
+// telling app to use urlencoder inorder to parse the req.body data
+app.use(express.urlencoded());
 //setting up the view engine to ejs
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
