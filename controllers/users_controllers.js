@@ -27,12 +27,9 @@ module.exports.create = (req,res)=>{
         }
 
     });
-
-    // create route later
 };
 
 // create new session for existing user
 module.exports.createSession = (req,res)=>{
-    // to do later :=> logic
-    // create route later
+    return res.redirect('/users/profile');
 };

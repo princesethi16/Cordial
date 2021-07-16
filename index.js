@@ -1,22 +1,48 @@
+// order of including library and setting up middleware is very important
+
 const express = require('express');
 const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
 const port = 8000;
 const db = require('./config/mongoose');
 const UserDb = require('./models/userSchema');
+
+// for user authentication
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+
+
+// to parse the cookie in req.body
 const cookieParser = require('cookie-parser');
 
 
 const app = express();
 
+// telling app to use urlencoder inorder to parse the req.body data
+app.use(express.urlencoded());
+
 // telling app to use cookie parser
 app.use(cookieParser());
 
-// telling app to use urlencoder inorder to parse the req.body data
-app.use(express.urlencoded());
 //setting up the view engine to ejs
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
+
+// to create a log in session we use middleware of express-session just after views
+app.use(session({
+    name: 'Cordial',
+    // TODO change the secret before deployment in production mode
+    secret: 'blahblahsomething',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: (1000 * 60 * 100) // set the time duration until cookie will be valid
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // set up the middleware for the static files like css images frontend javascript and images 
 app.use(express.static('./static'));
