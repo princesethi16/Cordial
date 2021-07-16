@@ -1,20 +1,18 @@
-// handle routes upto /profile page
+// handle routes upto /feed page
 const express = require('express');
 const router = express.Router(); 
 
 const userController = require('../controllers/users_controllers');
 
 // upto the profile of user section
-router.get('/profile',userController.profile);
+router.get('/feed',userController.feed);
 
-// Further route from the users
-// router.use()
-// for posts of profile loaded**********
-
-router.use('/profile/posts', require('./posts'));
+router.use('/feed/posts', require('./posts'));
 
 router.post('/create', userController.create);
 
 router.post('/create-session',userController.createSession);
+
+router.get('/sign-out',userController.endSession);
 
 module.exports = router; //used by the home route file
