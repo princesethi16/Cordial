@@ -40,7 +40,8 @@ module.exports.create = (req, res) => {
     var userDetails = req.body;
     UserDb.findOne({ email: userDetails.email }, (err, user) => {
         if (err) { console.log("error in finding the user in signing up;", error); return; }
-
+        
+        // user not found/ register user
         if (!user) {
             UserDb.create(userDetails, (err, user) => {
                 if (err) { console.log("error in creating user during sign up:", err); return; }
@@ -48,7 +49,8 @@ module.exports.create = (req, res) => {
             });
         }
 
-        else {
+        // user email already present in db/ user is already registered
+        else if(user){
             return res.redirect('back');
         }
 
