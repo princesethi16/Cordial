@@ -9,6 +9,8 @@ const userController = require('../controllers/users_controllers');
 // upto the feed of user section
 router.get('/feed', passport.checkAuthentication,userController.feed);
 
+router.get('/sign-out',userController.destroySession);
+
 // Further route from the users
 // router.use()
 // for posts of feed loaded**********

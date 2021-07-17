@@ -11,7 +11,8 @@ const UserDb = require('./models/userSchema');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-
+// for storting session cookie and session details in mongodb
+const MongoStore = require('connect-mongo');
 
 // to parse the cookie in req.body
 const cookieParser = require('cookie-parser');
@@ -38,7 +39,17 @@ app.use(session({
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100) // set the time duration until cookie will be valid
-    }
+    },
+    //mongo store is used to store the session cookie and details in db 
+    store: MongoStore.create(
+        {
+            mongoUrl: 'mongodb://localhost:27017/cordial_development',
+            autoRemove: 'disabled '
+        },
+        function(err){
+            console.log(err || 'connect-mongo set up: ok');
+        }
+    )
 }));
 
 app.use(passport.initialize());

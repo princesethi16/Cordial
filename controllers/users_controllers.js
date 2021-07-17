@@ -9,3 +9,7 @@ module.exports.feed = (req,res)=>{
     });
 };
 
+module.exports.destroySession = (req,res)=>{
+    req.logOut();
+    return res.redirect('/authentication/sign-in');
+}
