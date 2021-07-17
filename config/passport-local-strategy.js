@@ -47,5 +47,34 @@ passport.deserializeUser((id,done)=>{
     });
 });
 
+// check if the user is authenticated or not
+passport.checkAuthentication = (req,res,next)=>{
+    if(req.isAuthenticated()){
+        return next();
+    }
+    // if the user is not authenticated redirect user to the sign in page
+    return res.redirect('/authentication/sign-in');
+}
+//*******************For home and sign in/ sign up page************************* */
+// if user is authenticated then redirect them to profile page rather than the default
+passport.stopDefaultIfAuthentcated = (req,res,next)=>{
+    if(!req.isAuthenticated()){
+        // if user is not authenticated then let them access the home/sign-in/up page
+        return next();
+    }
+    else{
+        return res.redirect('/users/feed');
+    }
+}
+
+passport.setAuthenticatedUser = (req,res,next)=>{
+    if(req.isAuthenticated()){
+        // req.user contain the current sign in user from the session cookie created by passport and we are just sending this to the locals for the info of user to be passed on to the views
+        res.locals.user = req.user;
+    }
+    return next();
+}
+
+
 module.exports = passport;
 

@@ -44,6 +44,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// set the user who is authenticated to show their relevant data in views
+app.use(passport.setAuthenticatedUser);
+
 // set up the middleware for the static files like css images frontend javascript and images 
 app.use(express.static('./static'));
  

@@ -1,7 +1,7 @@
 // callback function for the posts
 
-module.exports.posts = (req,res)=>{
-    return res.render('posts',{
-        title: "Posts"
+module.exports.profile = (req,res)=>{
+    return res.render('profile',{
+        title: "Profile"
     });
 };
