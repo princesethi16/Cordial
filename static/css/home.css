@@ -1,4 +1,9 @@
-h1{
-    color: crimson;
-    font-family: sans-serif;
-}
+h1 {
+  color: crimson;
+  font-family: sans-serif; }
+
+body {
+  background-color: aliceblue; }
+
+#footer a:hover {
+  color: crimson !important; }

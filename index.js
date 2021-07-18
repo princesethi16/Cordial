@@ -1,6 +1,7 @@
 // order of including library and setting up middleware is very important
 
 const express = require('express');
+const app = express();
 const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
 const port = 8000;
@@ -17,8 +18,17 @@ const MongoStore = require('connect-mongo');
 // to parse the cookie in req.body
 const cookieParser = require('cookie-parser');
 
+// sass package
+const sassMiddleware = require('node-sass-middleware');
 
-const app = express();
+app.use(sassMiddleware({
+    src: './static/sass',
+    dest: './static/css',
+    prefix: '/css',
+    debug: true,
+    outputStyle: 'extented' 
+}));
+
 
 // telling app to use urlencoder inorder to parse the req.body data
 app.use(express.urlencoded());
