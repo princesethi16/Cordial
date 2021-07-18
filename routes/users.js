@@ -1,8 +1,8 @@
 // handle routes after /users
 const express = require('express');
+const router = express.Router(); 
 const passport = require('passport');
 
-const router = express.Router(); 
 
 const userController = require('../controllers/users_controllers');
 
@@ -16,6 +16,6 @@ router.get('/sign-out',userController.destroySession);
 // for posts of feed loaded**********
 
 router.use('/feed/profile',require('./profile'));
-
+router.use('/feed/post',require('./newPost'));
 
 module.exports = router; //used by the home route file

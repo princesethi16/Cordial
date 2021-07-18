@@ -1,0 +1,9 @@
+#posts-section {
+  height: 80vh;
+  overflow: scroll;
+  overflow-x: hidden; }
+  #posts-section::-webkit-scrollbar {
+    display: none; }
+
+.fs-7 {
+  font-size: 0.8rem; }
