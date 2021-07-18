@@ -1,30 +1,53 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <!-- -------------------------------------------------------------------------------------------- -->
-
+<link rel="stylesheet" href="/css/_header.css">
 <% if(locals.user){%>
-    <nav class="navbar navbar-dark bg-dark">
-        <!-- Navbar content -->
-        
-      </nav>
-    <% } else { %>
-            <!-- Navbar content -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                  <a class="navbar-brand fs-3" href="/">Cordial</a>
-                  <img src="/images/home/116333861-people-symbol-and-network-connection-on-black-background-in-social-media-and-digital-computer-techno.jpg" style="height: 50px; width: 150px;" alt="">
-                  <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNav">
-                    <ul class="navbar-nav me-5">
-                      <li class="nav-item">
-                        <a class="btn btn-primary" href="/authentication/sign-in" role="button">sign-in</a>
+    <!-- Navbar content -->
 
-                      </li>
-                      <li class="nav-item ms-4 ">
-                        <a class="btn btn-success" href="/authentication/sign-up" role="button">sign-up</a>
-                      </li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fs-3" href="/">Cordial</a>
+        <img
+          src="/images/home/116333861-people-symbol-and-network-connection-on-black-background-in-social-media-and-digital-computer-techno.jpg"
+          style="height: 50px; width: 150px;" alt="">
+        <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNav">
+          <ul class="navbar-nav me-5">
+            <li class="nav-item">
+              <a class="btn btn-dark" href="/users/profile" role="button" id="profile-header-btn"> <img src="/images/header profile image/images.png" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt=""><%= user.name%></a>
 
-                    </ul>
-                  </div>
-                </div>
-              </nav>
-          </nav>
-    <% } %>
+            </li>
+            <li class="nav-item ms-4 ">
+              <a class="btn btn-danger mt-1" href="/authentication/sign-up" role="button">sign-out</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </nav>
+<% } else { %>
+    <!-- Navbar content -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fs-3" href="/">Cordial</a>
+        <img
+          src="/images/home/116333861-people-symbol-and-network-connection-on-black-background-in-social-media-and-digital-computer-techno.jpg"
+          style="height: 50px; width: 150px;" alt="">
+        <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNav">
+          <ul class="navbar-nav me-5">
+            <li class="nav-item">
+              <a class="btn btn-primary" href="/authentication/sign-in" role="button">sign-in</a>
+
+            </li>
+            <li class="nav-item ms-4 ">
+              <a class="btn btn-success" href="/authentication/sign-up" role="button">sign-up</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+<% } %>
