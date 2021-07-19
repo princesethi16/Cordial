@@ -5,5 +5,28 @@
   #posts-section::-webkit-scrollbar {
     display: none; }
 
+#comment-card i {
+  margin-right: 9px; }
+
+#comment-card p button {
+  border-radius: 15px;
+  min-width: 100px;
+  color: #5f5d5d;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1rem; }
+  #comment-card p button:hover {
+    background-color: #e4e2e2; }
+
 .fs-7 {
   font-size: 0.8rem; }
+
+.input-group textarea::-webkit-scrollbar {
+  display: none; }
+
+.comments {
+  height: 50px;
+  border-radius: 15px !important; }
+  .comments h6 {
+    margin: 0%;
+    padding: 0px; }

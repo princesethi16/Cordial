@@ -7,7 +7,41 @@
     }
 }
 
+#comment-card{
+    i{
+        margin-right: 9px;
+    }
+    p{
+        button{
+            border-radius: 15px;
+            min-width: 100px;
+            color: rgb(95, 93, 93);
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            &:hover{
+                background-color: rgb(228, 226, 226);
+            }
+        }
+    }
+}
+
 .fs-7{
     font-size: 0.8rem;
 }
 
+.input-group{
+    textarea{
+        &::-webkit-scrollbar{
+            display: none;
+        }
+    }
+}
+.comments{
+    height: 50px;
+    border-radius: 15px !important;
+    h6{
+        margin: 0%;
+        padding: 0px;
+    }
+}

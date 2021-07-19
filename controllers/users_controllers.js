@@ -8,7 +8,18 @@ module.exports.feed = (req,res)=>{
     // to get the user of post created, we use the ref to user in post schema
     // to get the whole user info we have to just use the populate function
     // and callback function is called by exec function
-    Post.find({}).populate('user').exec((err,posts)=>{
+    Post.find({})
+    .populate('user')
+    .populate(
+        {
+            path: 'comments', // populate each comment in comments array
+            populate: // populate each specified field of comment
+            {
+                path: 'user'// populate user field of comment
+            }
+        }
+    )
+    .exec((err,posts)=>{
         if(err){
             console.log('error in finding posts in db',err);
             return;
