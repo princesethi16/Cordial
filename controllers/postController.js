@@ -67,33 +67,29 @@ module.exports.newComment = (req,res)=>{
 }
     
 
-module.exports.deleteComment = (req,res)=>{
+module.exports.deleteComment = async (req,res)=>{
     // 1. find if requested comment even exist or not 
     let commentId = req.params.commentId
     let postId = req.params.postId
-    Comment.findById(commentId,(err,comment)=>{
-        // comment found
-        if(comment){
+    let comment = await Comment.findById(commentId);
+    
+    // comment found
+    if(comment){
+        // find the post whose comment it is to delete its id
+        let post = await Post.findById(postId);
+        
+        if(req.user.id == comment.user || req.user.id == post.user){
             // 2. delete the id of this comment from the post ref array of comment id's
-            Post.findById(postId,(err,post)=>{
-                if(req.user.id == comment.user || req.user.id == post.user){
-                post.comments.pull({_id: commentId});
-                post.save();
-                
-                
-                // 3. delete that comment from the comment collection
-                comment.remove();
-                
-                // Comment.deleteOne({_id: commentId},(err)=>{
-                    //     if(err){console.log('error in deleting the comment',err); return;}
-                    // });
-                }
-                
-            });
-            return res.redirect('back');
+            post.comments.pull({_id: commentId});
+            post.save();
+            
+            // 3. delete that comment from the comment collection
+            comment.remove();
         }
 
-    });
+    }
+    
+    return res.redirect('back');
     
 }
     
