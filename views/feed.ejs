@@ -51,21 +51,10 @@
         </div>
 
         <!-- right section: friends -->
-        <div class="col-md-3">
-            <% for(u of all_users){ %>
-                
-            <div class="card w-100 bg-light">
-                <div class="card-body">
-                  <a class="text-decoration-none" href="profile/<%= u.email %>">
-                    <h6>
-                        <img src="/images/header profile image/images.png" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
-                        <%= u.name %>
-                    </h6>
-                </a>
-                </div>
-            </div>
+        <div class="col-md-2 ms-5" style="width: 270px;">
             
-            <% } %>
+            <!-- friends -->
+            <%- include('feed/_friends'); -%>
         </div>
     </div>
 </div>
