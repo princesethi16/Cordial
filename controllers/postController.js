@@ -15,6 +15,26 @@ module.exports.newPost = (req,res)=>{
     });
 }
 
+module.exports.deletePost = (req,res)=>{
+    let postId = req.params.id;
+    Post.findById(postId,(err,post)=>{
+        if(post){
+            // delete comments related to post in the db
+            Comment.deleteMany({post: post._id},(err)=>{
+                if(err){console.log('error in deleting comments of post:',err); return;}
+            });
+
+
+            Post.deleteOne({_id: post._id},(err)=>{
+                if(err){console.log('error in deleting post:',err); return;}
+            });
+
+            return res.redirect('back');
+        }
+    });
+}
+
+
 module.exports.newComment = (req,res)=>{
     let postId = req.query.post;
     let commentContent = req.body.newComment;
@@ -37,10 +57,45 @@ module.exports.newComment = (req,res)=>{
             });
 
         }
+
+        else{
+            return res.redirect('back');
+        }
     
     });
     
+}
     
+
+module.exports.deleteComment = (req,res)=>{
+    // 1. find if requested comment even exist or not 
+    let commentId = req.params.commentId
+    let postId = req.params.postId
+    Comment.findById(commentId,(err,comment)=>{
+        // comment found
+        if(comment){
+            // 2. delete the id of this comment from the post ref array of comment id's
+            Post.findById(postId,(err,post)=>{
+                if(req.user.id == comment.user || req.user.id == post.user){
+                post.comments.pull({_id: commentId});
+                post.save();
+                
+                
+                // 3. delete that comment from the comment collection
+                comment.remove();
+                
+                // Comment.deleteOne({_id: commentId},(err)=>{
+                    //     if(err){console.log('error in deleting the comment',err); return;}
+                    // });
+                }
+                
+            });
+            return res.redirect('back');
+        }
+
+    });
+    
+}
     
     
     
@@ -74,4 +129,3 @@ module.exports.newComment = (req,res)=>{
     */
 
 
-}

@@ -1,0 +1,26 @@
+<form action="/users/feed/post" method="POST">
+    <div class="container border-2 border bg-white">
+        <div class="row mb-2">
+            <div class="col-12">
+                <h4 class="mt-2">New Post</h4>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <label for="">
+                        </label>
+                        <img src="/images/header profile image/images.png"
+                            style="display: inline; height: 30px;width: 30px; border-radius: 50%;"
+                            alt="">
+                    </span>
+                    <textarea class="form-control bg-light" name="content"
+                        placeholder="What's on your mind,<%= user.name%> ?"
+                        aria-label="With textarea"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top py-2">
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary"> &nbsp; Post &nbsp; </button>
+            </div>
+        </div>
+    </div>
+</form>

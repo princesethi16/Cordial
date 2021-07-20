@@ -5,6 +5,7 @@
 
 <div class="container-fluid px-0 w-100 bg-light">
     <div class="row">
+        <!-- left section -->
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <img src="" class="card-img-top" alt="">
@@ -31,110 +32,40 @@
             </div>
 
         </div>
+        
+        <!-- post section -->
+
         <div class="col-md-5 mt-3 " id="posts-section">
             <section id="create-post-section">
-                <form action="/users/feed/post" method="POST">
-                    <div class="container border-2 border bg-white">
-                        <div class="row mb-2">
-                            <div class="col-12">
-                                <h4 class="mt-2">New Post</h4>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <label for="">
-                                        </label>
-                                        <img src="/images/header profile image/images.png"
-                                            style="display: inline; height: 30px;width: 30px; border-radius: 50%;"
-                                            alt="">
-                                    </span>
-                                    <textarea class="form-control bg-light" name="content"
-                                        placeholder="What's on your mind,<%= user.name%> ?"
-                                        aria-label="With textarea"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row border-top py-2">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary"> &nbsp; Post &nbsp; </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                <%- include('feed/_newPost') -%>
             </section>
             <section id="display-posts-section" class="mt-3">
                 <div class="container w-100 px-0">
                     <div class="row">
-                        <div class="col">
-                            <% for(let i = posts.length - 1 ; i>=0 ; i--){ %>
-                                <div class="card w-100 mt-4" id="comment-card">                        
-                                    <div class="card-body text-start pb-0">
-                                    <h6 class="card-title"><%= posts[i].user.name %></h6>
-                                    <p class="text-secondary fs-7"><%= posts[i].updatedAt %></p>
-                                    <p class="card-text fs-6"><%= posts[i].content %></p>
-                                                        <!-- no fo  L C S -->
-                                    <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
-                                        <span>0 Likes</span>
-                                        <span class="">
-                                            <span class="">
-                                                <span><%= posts[i].comments.length %>
-                                                    
-                                                    <% if(posts[i].comments.length == 1){%>
-                                                        Comment
-                                                    <%} else {%>
-                                                            Comments
-                                                    <%} %>
-                                                
-                                                </span>
-                                                <span>0 share </span>
-                                            </span>
-                                        </span>
-                                    </p>
-                                                        <!-- buttons for L C and S -->
-                                    <p class="border-top d-flex justify-content-between px-3 mt-2 mb-2">
-                                        <button type="button" class="btn btn-light btn-sm"><i class="far fa-heart"></i>Like</button>
-                                        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse" data-bs-target="#write-comment-<%= posts[i]._id%>" aria-expanded="false" aria-controls="collapseExample">
-                                            <i class="fas fa-comment"></i>Comment
-                                        </button>
-                                        <button type="button" class="btn btn-light btn-sm"><i class="fas fa-share-square"></i>Share</button>
-                                    </p>
-                                    <div class="collapse py-2" id="write-comment-<%= posts[i]._id%>">
-                                        <!-- add all comments here -->
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <% for(let comment of posts[i].comments){%>
-                                                    <div class="card w-100 mt-2 comments bg-light">
-                                                        <div class="card-body bg-transparent pt-1">
-                                                            <h6><%= comment.user.name %></h6>
-                                                            <p><%= comment.content %></p>
-                                                        </div>
-                                                    </div>
-                                                    <%} %>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <form class="mt-2" action="/users/feed/post/post-comment/?post=<%= posts[i]._id %>" method="POST">
-                                            <div class="input-group">
-                                                <a class="mt-1" href="/users/profile" role="" id=""> <img src="/images/header profile image/images.png" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt=""></a>
-                                                <textarea class="form-control" name="newComment" aria-label="With textarea" placeholder="write comment, <%= user.name %> !" rows="1"></textarea>
-                                                <span class="input-group-text bg-white border-0">
-                                                    <button type="submit" class="btn btn-info">Post</button>
-                                                </span>
-                                            </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                
-                            <%} %>
+                        <div class="col">    
+                            <%- include('feed/_post'); -%>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
-        <div class="col-md-3">
 
+        <!-- right section: friends -->
+        <div class="col-md-3">
+            <% for(u of all_users){ %>
+                
+            <div class="card w-100 bg-light">
+                <div class="card-body">
+                  <a class="text-decoration-none" href="profile/<%= u.email %>">
+                    <h6>
+                        <img src="/images/header profile image/images.png" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
+                        <%= u.name %>
+                    </h6>
+                </a>
+                </div>
+            </div>
+            
+            <% } %>
         </div>
     </div>
 </div>

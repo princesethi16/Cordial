@@ -15,7 +15,7 @@ router.get('/sign-out',userController.destroySession);
 // router.use()
 // for posts of feed loaded**********
 
-router.use('/feed/profile',require('./profile'));
-router.use('/feed/post',require('./newPost'));
+router.use('/profile',require('./profile'));
+router.use('/feed/post',require('./post'));
 
 module.exports = router; //used by the home route file

@@ -1,0 +1,101 @@
+<% for(let i=posts.length - 1 ; i>=0 ; i--){ %>
+
+    <div class="card w-100 mt-4" id="comment-card">
+        <div class="card-body text-start pb-0">
+            <h6 class="card-title d-flex justify-content-between">
+                <span>
+                    <%= posts[i].user.name %>
+                </span>
+                <% if(locals.user && locals.user.id==posts[i].user.id){ %>
+                    <a href="/users/feed/post/delete-post/<%= posts[i].id %>">
+                        <span class="fw-bold fs-5">X</span>
+                    </a>
+                    <% } %>
+            </h6>
+            <p class="text-secondary fs-7">
+                <%= posts[i].updatedAt %>
+            </p>
+            <p class="card-text fs-6">
+                <%= posts[i].content %>
+            </p>
+            <!-- no fo  L C S -->
+            <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
+                <span>0 Likes</span>
+                <span class="">
+                    <span class="">
+                        <span>
+                            <%= posts[i].comments.length %>
+
+                                <% if(posts[i].comments.length <=1){%>
+                                    Comment
+                                    <%} else {%>
+                                        Comments
+                                        <%} %>
+
+                        </span>
+                        <span>0 share </span>
+                    </span>
+                </span>
+            </p>
+            <!-- buttons for L C and S -->
+            <p class="border-top d-flex justify-content-between px-3 mt-2 mb-2">
+                <button type="button" class="btn btn-light btn-sm"><i class="far fa-heart"></i>Like</button>
+                <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse"
+                    data-bs-target="#write-comment-<%= posts[i]._id%>" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <i class="fas fa-comment"></i>Comment
+                </button>
+                <button type="button" class="btn btn-light btn-sm"><i class="fas fa-share-square"></i>Share</button>
+            </p>
+
+            <!-- comment section -->
+
+            <div class="collapse py-2" id="write-comment-<%= posts[i]._id%>">
+                <!-- add all comments here -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <% for(let comment of posts[i].comments){%>
+                                <div class="card w-100 mt-2 comments bg-light">
+                                    <div class="card-body bg-transparent pt-1">
+                                        <h6 class="d-flex justify-content-between">
+                                            <span>
+                                                <%= comment.user.name %>
+                                            </span>
+                                            <% if(locals.user && (comment.user.id==locals.user.id ||
+                                                posts[i].user.id==locals.user.id)){ %>
+                                                <a
+                                                    href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= comment.id %>">
+                                                    <span class="fw-bold fs-6 mb-3">X</span>
+                                                </a>
+                                                <% } %>
+                                        </h6>
+                                        <p>
+                                            <%= comment.content %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <%} %>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="mt-2" action="/users/feed/post/post-comment/?post=<%= posts[i]._id %>" method="POST">
+                    <div class="input-group">
+                        <a class="mt-1" href="/users/profile" role="" id=""> 
+                            <img
+                            src="/images/header profile image/images.png"
+                            style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt=""></a>
+                        <textarea class="form-control" name="newComment" aria-label="With textarea"
+                            placeholder="write comment, <%= user.name %> !" rows="1"></textarea>
+                        <span class="input-group-text bg-white border-0">
+                            <button type="submit" class="btn btn-info">Post</button>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <%} %>
