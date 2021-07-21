@@ -4,6 +4,7 @@ const UserDb = require('../models/userSchema');
 
 // this is callback function used by signInUp route file
 module.exports.signIn = (req,res)=>{
+    
     return res.render('sign_in',{
         title: "Sign In"
     });
@@ -22,6 +23,7 @@ module.exports.create = async (req,res)=>{
         let user = await UserDb.findOne({email: userDetails.email });
 
         if(!user){
+            console.log(req.body);
             UserDb.create(userDetails,(err,user)=>{
                 return res.redirect('/authentication/sign-in')
             });
@@ -36,7 +38,8 @@ module.exports.create = async (req,res)=>{
     }
 };
 
-// create new session for existing user
+// create new session for existing user (from sign in page to createSession to feed)
 module.exports.createSession = (req,res)=>{
+    req.flash('success','Logged in Successfully!');
     return res.redirect('/users/feed');
 };

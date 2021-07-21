@@ -1,0 +1,25 @@
+<% if(locals.flash && locals.flash.success.length > 0 ){%>
+    <script>
+        new Noty({
+            theme: 'nest',
+            text: '<%= flash.success %>',
+            type: 'success',
+            layout: 'topCenter',
+            timeout: 1500
+        }).show();
+        
+    </script>
+<%}%>
+
+<% if(locals.flash && locals.flash.error.length > 0 ){%>
+    <script>
+        new Noty({
+            theme: 'nest',
+            text: '<%= flash.error %>',
+            type: 'error',
+            layout: 'topCenter',
+            timeout: 1500
+        }).show();
+        
+    </script>
+<% } %>

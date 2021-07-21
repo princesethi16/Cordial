@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router(); 
 const passport = require('passport');
-
+const customMiddleware = require('../config/customMiddleware');
 
 const userController = require('../controllers/users_controllers');
 

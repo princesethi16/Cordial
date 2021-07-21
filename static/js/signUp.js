@@ -8,7 +8,7 @@ btn.click((event)=>{
         pass.addClass('boxSh-danger');
         rePass.addClass('boxSh-danger');
         event.preventDefault();
-        btn.html("Passwords does not match")
+        btn.html("Passwords do not match")
         return;
     }
 });

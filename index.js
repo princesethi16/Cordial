@@ -7,6 +7,8 @@ const path = require('path');
 const port = 8000;
 const db = require('./config/mongoose');
 const UserDb = require('./models/userSchema');
+const flash = require('connect-flash');
+const customMiddleware = require('./config/customMiddleware');
 
 // for user authentication
 const session = require('express-session');
@@ -70,13 +72,18 @@ app.use(passport.setAuthenticatedUser);
 
 // set up the middleware for the static files like css images frontend javascript and images 
 app.use(express.static('./static'));
- 
 
 //middleware for the layouts
 app.use(expressEjsLayouts);
 // to extract the style and script and place in appropriate place in html document
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
+
+// set up the flash***
+app.use(flash());
+
+// middleware for the flash***
+app.use(customMiddleware.flash);
 
 // import the router module for use
 var router = require('./routes/home');

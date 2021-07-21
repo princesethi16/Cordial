@@ -1,6 +1,8 @@
-a{
-    text-decoration: none !important;
-    &:hover{
+.card-body {
+    a{
+        text-decoration: none;
+        &:hover{
         text-decoration: underline !important;
+        }
     }
 }

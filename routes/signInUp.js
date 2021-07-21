@@ -3,7 +3,7 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-
+const customMiddleware = require('../config/customMiddleware');
 
 var signInUpController = require('../controllers/signInUp_controller');
 router.get('/sign-in',signInUpController.signIn);

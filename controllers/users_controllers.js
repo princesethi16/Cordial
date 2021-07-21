@@ -24,6 +24,8 @@ module.exports.feed = async (req,res)=>{
     
         let users = await User.find({});
         
+        console.log(res.locals.flash);
+
         return res.render('feed',{
             title: 'Feed',
             posts: posts,
@@ -39,5 +41,6 @@ module.exports.feed = async (req,res)=>{
 
 module.exports.destroySession = (req,res)=>{
     req.logOut();
+    req.flash('success','Logged out!')
     return res.redirect('/authentication/sign-in');
 }
