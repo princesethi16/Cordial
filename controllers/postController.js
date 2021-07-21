@@ -11,6 +11,16 @@ module.exports.newPost = (req,res)=>{
             console.log("error in creating the post:", error);
             return;
         }
+
+        if(req.xhr){
+            return res.status(200).json({
+                post: post,
+                message: "New post created"
+            });
+        }
+
+
+
         return res.redirect('back');
     });
 }
