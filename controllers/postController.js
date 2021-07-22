@@ -3,6 +3,7 @@ const Comment = require('../models/commentsSchema');
 
 
 module.exports.newPost = (req,res)=>{
+    let userName = req.user.name;
     Post.create({
         content: req.body.content,
         user: req.user._id
@@ -12,10 +13,14 @@ module.exports.newPost = (req,res)=>{
             return;
         }
 
+    
+
         if(req.xhr){
             return res.status(200).json({
                 post: post,
-                message: "New post created"
+                user_name: userName,
+                message: "New post created",
+
             });
         }
 
@@ -27,8 +32,10 @@ module.exports.newPost = (req,res)=>{
 
 module.exports.deletePost = (req,res)=>{
     let postId = req.params.id;
+
     Post.findById(postId,(err,post)=>{
         if(post){
+    
             // delete comments related to post in the db
             Comment.deleteMany({post: post._id},(err)=>{
                 if(err){console.log('error in deleting comments of post:',err); return;}
@@ -38,6 +45,15 @@ module.exports.deletePost = (req,res)=>{
             Post.deleteOne({_id: post._id},(err)=>{
                 if(err){console.log('error in deleting post:',err); return;}
             });
+
+            
+
+            if(req.xhr){
+                return res.status(200).json({
+                    post_id: postId,
+                    message: "Post Deleted"
+                })
+            }
 
             return res.redirect('back');
         }
