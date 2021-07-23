@@ -18,7 +18,7 @@ module.exports.newPost = (req,res)=>{
         if(req.xhr){
             return res.status(200).json({
                 post: post,
-                user_name: userName,
+                user: req.user,
                 message: "New post created",
 
             });
@@ -84,7 +84,7 @@ module.exports.newComment = (req,res)=>{
                 if(req.xhr){
                     return res.status(200).json({
                         comment: comment,
-                        user_name: req.user.name,
+                        user: req.user,
                         message: "New comment!",
                         post: post
         

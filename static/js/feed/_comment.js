@@ -17,7 +17,7 @@ for(let i=0; i<forms.length ;i++){
                 data: form.serialize(),
                 success: function (data){
                     
-                    let newComment = createComment(data.comment,data.user_name,data.post);
+                    let newComment = createComment(data.comment,data.user,data.post);
                     changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
                     delComment($(` #deleteComment-button-${data.comment._id}`,newComment));
                     form.find('textarea').val("");
@@ -52,7 +52,7 @@ function addNotyError(message){
     }).show();
 }
 
-function createComment(comment,userName,post){
+function createComment(comment,user,post){
 
 
     return $(`#writeComment-${post._id}`).prepend(`
@@ -61,7 +61,7 @@ function createComment(comment,userName,post){
             <div class="card-body bg-transparent pt-1">
                 <h6 class="d-flex justify-content-between">
                     <span>
-                        ${userName}
+                        ${user.name}
                     </span>
                         <a
                             class="delete-comment-link" id="deleteComment-button-${comment._id}"
@@ -117,8 +117,9 @@ for(let i =0 ; i< delCommentBtns.length; i++){
             type: 'get',
             url: delBtn.prop('href'),
             success: function (data){
-                let post = $(`#comment-${data.comment._id}`);
-                post.remove();
+                let comment = $(`#comment-${data.comment._id}`);
+                comment.remove();
+                changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
                 addNoty(data.message);
                 return;
             },

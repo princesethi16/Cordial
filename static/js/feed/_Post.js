@@ -18,7 +18,7 @@
                 data: form.serialize(),
                 success: function (data){
                     console.log(data.post);
-                    let newPost = createNewPostDOM(data.post,data.user_name);
+                    let newPost = createNewPostDOM(data.post,data.user);
                     $('#newPostForm textarea').val("");
                     // deletePostMethod
                     deletePost($(' .delete-post-link', newPost));
@@ -38,7 +38,7 @@
 
         // method to create the post in DOM
 
-    let createNewPostDOM = function(post,userName){
+    let createNewPostDOM = function(post,user){
         var commentString;
         if(post.comments.length <= 1){
             commentString = "Comment";
@@ -51,7 +51,7 @@
                 <div class="card-body text-start pb-0">
                     <h6 class="card-title d-flex justify-content-between">
                         <span>
-                            ${ userName }
+                            ${ user.name }
                         </span>
                             <a class="delete-post-link" href="/users/feed/post/delete-post/${ post._id}">
                                 <span class="fw-bold fs-5">X</span>
@@ -106,10 +106,10 @@
                             <div class="input-group">
                                 <a class="mt-1" href="/users/profile" role="" id=""> 
                                     <img
-                                    src="/images/header profile image/images.png"
+                                    src="${user.avatar}"
                                     style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt=""></a>
                                 <textarea class="form-control" name="newComment" aria-label="With textarea"
-                                    placeholder="write comment, ${ userName } !" rows="1"></textarea>
+                                    placeholder="write comment, ${ user.name } !" rows="1"></textarea>
                                 <span class="input-group-text bg-white border-0">
                                     <button type="submit" class="btn btn-info">Post</button>
                                 </span>
@@ -212,7 +212,7 @@
                 data: commentForm.serialize(),
                 success: function (data){
                     
-                    let newComment = createComment(data.comment,data.user_name,data.post);
+                    let newComment = createComment(data.comment,data.user,data.post);
                     commentForm.find('textarea').val("");
                     delComment($(` #deleteComment-button-${data.comment._id}`,newComment));
                     changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
@@ -228,7 +228,7 @@
     }
 
 
-    function createComment(comment,userName,post){
+    function createComment(comment,user,post){
         console.log(post.comments.length);
         var commentString;
         if(post.comments.length <= 1){
@@ -245,7 +245,7 @@
                 <div class="card-body bg-transparent pt-1">
                     <h6 class="d-flex justify-content-between">
                         <span>
-                            ${userName}
+                            ${user.name}
                         </span>
                             <a
                                 class="delete-comment-link" id="deleteComment-button-${comment._id}"

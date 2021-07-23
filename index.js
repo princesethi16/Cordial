@@ -73,6 +73,9 @@ app.use(passport.setAuthenticatedUser);
 // set up the middleware for the static files like css images frontend javascript and images 
 app.use(express.static('./static'));
 
+// to make the uploads path available to browser for getting the uploaded files
+app.use('/uploads',express.static(__dirname + '/uploads'));
+
 //middleware for the layouts
 app.use(expressEjsLayouts);
 // to extract the style and script and place in appropriate place in html document
@@ -90,6 +93,7 @@ var router = require('./routes/home');
 
 // use the express router
 app.use('/', router);
+
 
 app.listen(port,(err)=>{
     if(err){

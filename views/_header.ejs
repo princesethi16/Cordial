@@ -19,7 +19,7 @@
           <ul class="navbar-nav me-5">
             <li class="nav-item">
               <a class="btn btn-dark" href="/users/profile/<%= locals.user.id %>" role="button" id="profile-header-btn"> 
-                  <img src="/images/header profile image/images.png" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
+                  <img src="<%= locals.user.avatar %>" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
                   <%= locals.user.name%>
               </a>
 

@@ -84,7 +84,7 @@
                     <div class="input-group">
                         <a class="mt-1" href="/users/profile" role="" id=""> 
                             <img
-                            src="/images/header profile image/images.png"
+                            src="<%= locals.user.avatar %>" alt="<%= locals.user.name %>"
                             style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt=""></a>
                         <textarea class="form-control" name="newComment" aria-label="With textarea"
                             placeholder="write comment, <%= user.name %> !" rows="1"></textarea>
