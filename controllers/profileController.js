@@ -36,7 +36,8 @@ module.exports.editProfile = async (req,res)=>{
         });
 
         }catch(err){
-            console.log('error in editing the user profile',err)
+            console.log('error in editing the user profile',err);
+            return res.redirect('back');
         }
 
     }
