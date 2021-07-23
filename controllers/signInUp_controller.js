@@ -1,6 +1,7 @@
 // controller for the sign in and sign up pages and creating sessions and new accounts
 
 const UserDb = require('../models/userSchema');
+const path = require('path');
 
 // this is callback function used by signInUp route file
 module.exports.signIn = (req,res)=>{
@@ -23,12 +24,15 @@ module.exports.create = async (req,res)=>{
         let user = await UserDb.findOne({email: userDetails.email });
 
         if(!user){
-            console.log(req.body);
+        
             UserDb.create(userDetails,(err,user)=>{
+                user.avatar = path.join(UserDb.AvatarPath,'/default/default-avatar.png');
+                user.save();
                 return res.redirect('/authentication/sign-in')
             });
         }
         else{
+            req.flash('error','email already registered!');
             return res.redirect('back');
         }
     }

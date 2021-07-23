@@ -1,5 +1,7 @@
 // callback function for the posts
 const User = require('../models/userSchema');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = (req,res)=>{
     let userId = req.params.user;
@@ -27,6 +29,11 @@ module.exports.editProfile = async (req,res)=>{
             user.name = userName;
             user.email = userEmail;
             if(req.file){
+
+                // if user's avatar is already present then remove the existing and then save new
+                if(user.avatar && fs.existsSync(path.join(__dirname,'..',user.avatar)))
+                fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+
                 // path of uploaded image should be stored in user's db
                 user.avatar = User.AvatarPath + '/' + req.file.filename;
             }
@@ -46,12 +53,3 @@ module.exports.editProfile = async (req,res)=>{
     }
 };
 
-// let userName = req.body.name;
-//         let userEmail = req.body.email;
-        
-//         User.findByIdAndUpdate(userId,{
-//             name: userName,
-//             email: userEmail
-//         },(err,user)=>{
-//             return res.redirect('back');
-//         });

@@ -54,24 +54,24 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12" id="writeComment-<%= posts[i]._id%>">
-                            <% for(let comment of posts[i].comments){%>
-                                <div class="card w-100 mt-2 comments bg-light" id="comment-<%= comment.id %>">
+                            <% for(let j =posts[i].comments.length -1 ; j>= 0 ; j--){%>
+                                <div class="card w-100 mt-2 comments bg-light" id="comment-<%= posts[i].comments[j].id %>">
                                     <div class="card-body bg-transparent pt-1">
                                         <h6 class="d-flex justify-content-between">
                                             <span>
-                                                <%= comment.user.name %>
+                                                <%= posts[i].comments[j].user.name %>
                                             </span>
-                                            <% if(locals.user && (comment.user.id==locals.user.id ||
+                                            <% if(locals.user && (posts[i].comments[j].user.id==locals.user.id ||
                                                 posts[i].user.id==locals.user.id)){ %>
                                                 <a
                                                 class="delete-comment-link"
-                                                href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= comment.id %>">
+                                                href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= posts[i].comments[j].id %>">
                                                     <span class="fw-bold fs-6 mb-3">X</span>
                                                 </a>
                                                 <% } %>
                                         </h6>
                                         <p>
-                                            <%= comment.content %>
+                                            <%= posts[i].comments[j].content %>
                                         </p>
                                     </div>
                                 </div>
