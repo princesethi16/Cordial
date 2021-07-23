@@ -79,6 +79,18 @@ module.exports.newComment = (req,res)=>{
 
                 post.comments.push(comment._id);
                 post.save();
+
+                console.log('jello')
+                if(req.xhr){
+                    return res.status(200).json({
+                        comment: comment,
+                        user_name: req.user.name,
+                        message: "New comment!",
+                        post: post
+        
+                    });
+                }
+
                 return res.redirect('back');
             });
 
@@ -111,9 +123,19 @@ module.exports.deleteComment = async (req,res)=>{
             
             // 3. delete that comment from the comment collection
             comment.remove();
+        
+            if(req.xhr){
+                return res.status(200).json({
+                    comment: comment,
+                    post: post,
+                    message: "Comment Deleted!"
+                })
+            }
         }
 
     }
+
+    
     
     return res.redirect('back');
     

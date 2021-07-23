@@ -54,7 +54,7 @@
                 <!-- add all comments here -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12" id="writeComment-<%= posts[i]._id%>">
                             <% for(let comment of posts[i].comments){%>
                                 <div class="card w-100 mt-2 comments bg-light" id="comment-<%= comment.id %>">
                                     <div class="card-body bg-transparent pt-1">
@@ -65,7 +65,8 @@
                                             <% if(locals.user && (comment.user.id==locals.user.id ||
                                                 posts[i].user.id==locals.user.id)){ %>
                                                 <a
-                                                    href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= comment.id %>">
+                                                class="delete-comment-link"
+                                                href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= comment.id %>">
                                                     <span class="fw-bold fs-6 mb-3">X</span>
                                                 </a>
                                                 <% } %>
@@ -80,7 +81,7 @@
                     </div>
                 </div>
 
-                <form class="mt-2" action="/users/feed/post/post-comment/?post=<%= posts[i]._id %>" method="POST">
+                <form class="mt-2 post-comment-form" data-postId="<%= posts[i]._id %>" action="/users/feed/post/post-comment/?post=<%= posts[i]._id %>" method="POST" id="post-comment-form-<%= posts[i]._id %>">
                     <div class="input-group">
                         <a class="mt-1" href="/users/profile" role="" id=""> 
                             <img
@@ -99,3 +100,5 @@
 </div>
 
 <%} %>
+
+<script src="/js/feed/_comment.js"></script>
