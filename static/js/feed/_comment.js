@@ -16,8 +16,9 @@ for(let i=0; i<forms.length ;i++){
                 url: form.prop('action'),
                 data: form.serialize(),
                 success: function (data){
-                    console.log('hello');
+                    
                     let newComment = createComment(data.comment,data.user_name,data.post);
+                    changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
                     delComment($(` #deleteComment-button-${data.comment._id}`,newComment));
                     form.find('textarea').val("");
                     addNoty(data.message);
@@ -52,14 +53,6 @@ function addNotyError(message){
 }
 
 function createComment(comment,userName,post){
-
-    var commentString;
-    if(post.comments.length <= 1){
-        commentString = "Comment";
-    }else{
-        commentString = "Comments";
-    }
-    $(`comment-span-${ post._id}`).html(`${post.comments.length} ${commentString}`);
 
 
     return $(`#writeComment-${post._id}`).prepend(`
@@ -99,6 +92,7 @@ function delComment(deleteCommentLink){
             success: function (data){
                 let comment = $(`#comment-${data.comment._id}`);
                 comment.remove();
+                changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
                 addNoty(data.message);
                 return;
             },
@@ -136,7 +130,15 @@ for(let i =0 ; i< delCommentBtns.length; i++){
     })
 }
 
-
+function changeCommentCount(commentSpan,post){
+    console.log(commentSpan);
+    let commentsCount = post.comments.length;
+    if(commentsCount <= 1){
+        commentSpan.html(`${commentsCount} Comment`);
+    }else{
+        commentSpan.html(`${commentsCount} Comments`);
+    }
+}
 
 
 

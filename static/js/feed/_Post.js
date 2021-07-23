@@ -24,6 +24,7 @@
                     deletePost($(' .delete-post-link', newPost));
                     //adding comment
                     addComment($(` #post-comment-form-${data.post._id}`,newPost),data.post);
+                    
                     addNoty(data.message);
                     
                 },
@@ -68,7 +69,7 @@
                         <span>0 Likes</span>
                         <span class="">
                             <span class="">
-                                <span id="comment-span-${ post._id}">
+                                <span id="comment-span-${post._id}">
                                     ${post.comments.length }
                                     ${commentString}
         
@@ -204,16 +205,17 @@
         commentForm.submit(function(e){
             e.preventDefault();
             let url = `/users/feed/post/post-comment/?post=${post._id}`;
-            console.log('hello1')
+        
             $.ajax({
                 type: 'post',
                 url: url,
                 data: commentForm.serialize(),
                 success: function (data){
-                    console.log('hello');
+                    
                     let newComment = createComment(data.comment,data.user_name,data.post);
                     commentForm.find('textarea').val("");
                     delComment($(` #deleteComment-button-${data.comment._id}`,newComment));
+                    changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
                     addNoty(data.message);
                     return;
                 },
@@ -260,29 +262,16 @@
         `);
     }
 
-    // deleting the comment
-    // function delComment(deleteCommentLink){
-    //     deleteCommentLink.click(function(e){
 
-    //         e.preventDefault();
-    //         console.log(deleteCommentLink.prop('href'));
-    //         $.ajax({
-    //             type: 'get',
-    //             url: deleteCommentLink.prop('href'),
-    //             success: function (data){
-    //                 let comment = $(`#comment-${data.comment._id}`);
-    //                 comment.remove();
-    //                 addNoty(data.message);
-    //                 return;
-    //             },
-    //             error: function (err){
-    //                 addNotyError(err.responseText);
-                    
-    //             }
-    //         });
-    //     });
-    // }
-
+    function changeCommentCount(commentSpan,post){
+        let commentsCount = post.comments.length;
+        if(commentsCount <= 1){
+            commentSpan.html(`${commentsCount} Comment`);
+        }else{
+            commentSpan.html(`${commentsCount} Comments`);
+        }
+    }
+    
 
 }
 

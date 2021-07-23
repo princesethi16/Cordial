@@ -22,19 +22,18 @@
             <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
                 <span>0 Likes</span>
                 <span class="">
-                    <span class="">
-                        <span>
+                    <span id="comment-span-<%= posts[i]._id%>">
                             <%= posts[i].comments.length %>
 
-                                <% if(posts[i].comments.length <=1){%>
+                            <% if(posts[i].comments.length <=1){%>
                                     Comment
-                                    <%} else {%>
-                                        Comments
-                                        <%} %>
+                            <%} else {%>
+                                    Comments
+                            <%} %>
 
-                        </span>
-                        <span>0 share </span>
                     </span>
+                    <span>0 share </span>
+                    
                 </span>
             </p>
             <!-- buttons for L C and S -->
