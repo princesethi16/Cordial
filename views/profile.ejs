@@ -21,7 +21,7 @@
                       <h5 class="card-title border-bottom pb-2 mb-0">Edit Profile</h5>
                     </div>
                     <!-- edit profile form -->
-                    <form action="/users/profile/edit/<%= currUser.id %>" method="POST">
+                    <form action="/users/profile/edit/<%= currUser.id %>" method="POST" enctype="multipart/form-data">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="input-group">
@@ -35,6 +35,14 @@
                                     <span class="input-group-text" id="basic-addon1">Email @</span>
                                     <input type="email" id="email" name="email" class="form-control"
                                         placeholder="example@email.com" aria-label="Username" aria-describedby="basic-addon1"
+                                        value="<%= currUser.email %>"  required>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Profile Pic</span>
+                                    <input type="file" id="user-avatar" name="user-avatar" class="form-control"
+                                        placeholder="upload pic" aria-label="Username" aria-describedby="basic-addon1"
                                         value="<%= currUser.email %>"  required>
                                 </div>
                             </li>
