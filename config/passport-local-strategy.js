@@ -11,7 +11,7 @@ passport.use(new LocalStrategy(
     },
     function(req,email,password,done){
         // find the user and establish the identity
-        User.findOne({email: email},(err,foundUser)=>{
+        User.findOne({email: email}).select('+password').exec((err,foundUser)=>{
             if(err){
                 req.flash('error',err);
                 return done(err);
@@ -36,7 +36,7 @@ passport.serializeUser((user,done)=>{
 
 //3. deserializing function so that when browser sends back cookie to authenticate, it can decode the cookie and match the decrypted id with the user.id in database
 passport.deserializeUser((id,done)=>{
-    User.findById(id,(err,foundUser)=>{
+    User.findById(id).select('+password').exec((err,foundUser)=>{
         if(err){
             console.log("error in finding user --> Passport:",err);
             return done(err);

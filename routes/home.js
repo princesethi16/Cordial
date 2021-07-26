@@ -18,4 +18,6 @@ router.use('/users',passport.checkAuthentication,require('./users'));
 router.use('/authentication',passport.stopDefaultIfAuthentcated,require('./signInUp'));
 // further --> sign-in/ sign-up
 
+router.use('/api',require('./api'));
+
 module.exports = router;

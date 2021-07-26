@@ -8,12 +8,14 @@ const port = 8000;
 const db = require('./config/mongoose');
 const UserDb = require('./models/userSchema');
 const flash = require('connect-flash');
+var cors = require('cors');
 const customMiddleware = require('./config/customMiddleware');
 
 // for user authentication
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
 // for storting session cookie and session details in mongodb
 const MongoStore = require('connect-mongo');
 
@@ -87,6 +89,9 @@ app.use(flash());
 
 // middleware for the flash***
 app.use(customMiddleware.flash);
+
+// for allowing the cross origin requests=== cors is used ***
+app.use(cors());
 
 // import the router module for use
 var router = require('./routes/home');
