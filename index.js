@@ -11,6 +11,9 @@ const flash = require('connect-flash');
 var cors = require('cors');
 const customMiddleware = require('./config/customMiddleware');
 
+// mailer for notifications
+const nodemailer = require('nodemailer');
+
 // for user authentication
 const session = require('express-session');
 const passport = require('passport');

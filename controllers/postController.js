@@ -1,6 +1,7 @@
 const Post = require('../models/postSchema');
 const Comment = require('../models/commentsSchema');
-
+const User = require('../models/userSchema');
+const commentsMailer = require('../mailers/comments_mailer');
 
 module.exports.newPost = (req,res)=>{
     let userName = req.user.name;
@@ -61,46 +62,52 @@ module.exports.deletePost = (req,res)=>{
 }
 
 
-module.exports.newComment = (req,res)=>{
+module.exports.newComment = async (req,res)=>{
     let postId = req.query.post;
     let commentContent = req.body.newComment;
     // create new comment in db
     
-    Post.findById(postId, (err,post)=>{
-        if(err){console.log('error in finding post for the comment posting:',err); return;}
-        
+    try{
+        let post = await Post.findById(postId);
+            
         if(post){
-            Comment.create({
+            let comment = await Comment.create({
                 content: commentContent,
                 post: postId,
                 user: req.user._id
-            },(err,comment)=>{
-                if(err){console.log('error in posting the comment:',err); return;}
-
-                post.comments.push(comment._id);
-                post.save();
-
-                console.log('jello')
-                if(req.xhr){
-                    return res.status(200).json({
-                        comment: comment,
-                        user: req.user,
-                        message: "New comment!",
-                        post: post
-        
-                    });
-                }
-
-                return res.redirect('back');
             });
+
+            post.comments.push(comment._id);
+            post.save();
+
+            post = await post.populate('user','name email').execPopulate();
+            comment = await comment.populate('user','name email').execPopulate();
+            commentsMailer.newComment(post,comment);
+
+            if(req.xhr){
+                return res.status(200).json({
+                    comment: comment,
+                    user: req.user,
+                    message: "New comment!",
+                    post: post
+    
+                });
+            }
+
+            return res.redirect('back');
 
         }
 
         else{
             return res.redirect('back');
         }
-    
-    });
+        
+        
+
+    }catch(err){
+        console.log('err in creating the new comment:',err)
+        return res.redirect('back');
+    }
     
 }
     
