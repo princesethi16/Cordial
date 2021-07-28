@@ -16,4 +16,15 @@ router.post('/create-session',passport.authenticate(
     {failureRedirect: '/authentication/sign-in'}
 ),signInUpController.createSession);
 
+// use the google auth strategy to sign in***
+// to send the request to google to authenticate the user 
+router.get('/google',passport.authenticate('google',{scope: ['profile','email']}));
+// to recieve the info( or get the callback from google to contain the info )
+router.get('/google/callback',passport.authenticate( // similar to the local-strategy
+    'google',
+    {failureRedirect: '/authentication/sign-in'}
+    ),
+    signInUpController.createSession
+);
+
 module.exports = router;
