@@ -2,6 +2,8 @@ const Post = require('../models/postSchema');
 const Comment = require('../models/commentsSchema');
 const User = require('../models/userSchema');
 const commentsMailer = require('../mailers/comments_mailer');
+const queue = require('../config/kue');
+const emailsWorker = require('../workers/comment_email_worker');
 
 module.exports.newPost = (req,res)=>{
     let userName = req.user.name;
@@ -82,7 +84,13 @@ module.exports.newComment = async (req,res)=>{
 
             post = await post.populate('user','name email').execPopulate();
             comment = await comment.populate('user','name email').execPopulate();
-            commentsMailer.newComment(post,comment);
+            // commentsMailer.newComment(post,comment); when doing without Kue.js
+            let job = queue.create('emails',{comment: comment, post: post}).save(function(err){
+                if(err){console.log('error in creating the job of sending mail when new comment is posted',err);return;}
+                else{
+                    console.log('job enqueued!',job.id);
+                }
+            });
 
             if(req.xhr){
                 return res.status(200).json({

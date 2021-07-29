@@ -17,7 +17,6 @@ exports.newComment = (post,comment) => {
         html: htmlString
     },(err,info)=>{
         if(err){console.log('error in mailing for new comment',err); return;}
-    
-        console.log('Message Sent',info);
+
     });
 }
