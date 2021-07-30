@@ -27,4 +27,7 @@ router.get('/google/callback',passport.authenticate( // similar to the local-str
     signInUpController.createSession
 );
 
+// for reseting the password
+router.use('/forgot_password',require('./forgot_password'));
+
 module.exports = router;

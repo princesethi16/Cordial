@@ -47,3 +47,7 @@ module.exports.createSession = (req,res)=>{
     req.flash('success','Logged in Successfully!');
     return res.redirect('/users/feed');
 };
+
+
+
+
