@@ -1,5 +1,6 @@
 const Post = require('../models/postSchema');
 const Comment = require('../models/commentsSchema');
+
 const User = require('../models/userSchema');
 const commentsMailer = require('../mailers/comments_mailer');
 const queue = require('../config/kue');
@@ -150,13 +151,11 @@ module.exports.deleteComment = async (req,res)=>{
 
     }
 
-    
-    
     return res.redirect('back');
     
 }
     
-    
+
     
     
     

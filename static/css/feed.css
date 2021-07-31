@@ -30,3 +30,11 @@
   .comments h6 {
     margin: 0%;
     padding: 0px; }
+
+.btn-light:focus {
+  box-shadow: 0 0 0 0 !important; }
+
+.liked {
+  color: #0c0ccc !important; }
+  .liked:hover {
+    background-color: gainsboro !important; }

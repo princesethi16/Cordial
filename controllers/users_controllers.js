@@ -20,6 +20,13 @@ module.exports.feed = async (req,res)=>{
                     path: 'user'// populate user field of comment
                 }
             }
+        ).populate(
+            {
+                path: 'likes',
+                populate: {
+                    path: 'user'
+                }
+            }
         );
     
         let users = await User.find({});

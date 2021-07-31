@@ -45,3 +45,19 @@
         padding: 0px;
     }
 }
+
+// for the likes
+
+.btn-light{
+    &:focus{
+        box-shadow: 0 0 0 0 !important;
+    }
+}
+
+.liked{
+    color: rgb(12, 12, 204) !important;
+    &:hover {
+        background-color: gainsboro !important;
+    }
+}
+

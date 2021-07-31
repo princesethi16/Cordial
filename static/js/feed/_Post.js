@@ -17,14 +17,15 @@
                 url: url,
                 data: form.serialize(),
                 success: function (data){
-                    console.log(data.post);
+                    
                     let newPost = createNewPostDOM(data.post,data.user);
                     $('#newPostForm textarea').val("");
                     // deletePostMethod
                     deletePost($(' .delete-post-link', newPost));
                     //adding comment
                     addComment($(` #post-comment-form-${data.post._id}`,newPost),data.post);
-                    
+                    // toggling like
+                    toggleLike($(` .toggle-like`,newPost));
                     addNoty(data.message);
                     
                 },
@@ -66,7 +67,8 @@
                     </p>
                     <!-- no fo  L C S -->
                     <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
-                        <span>0 Likes</span>
+                        <span id="likes-span-${post._id}">${post.likes.length} Like</span>
+                        
                         <span class="">
                             <span class="">
                                 <span id="comment-span-${post._id}">
@@ -80,8 +82,10 @@
                     </p>
                     
                     <p class="border-top d-flex justify-content-between px-3 mt-2 mb-2">
-                        <button type="button" class="btn btn-light btn-sm"><i class="far fa-heart"></i>Like</button>
-                        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse"
+                        <a class="toggle-like" href="/users/feed/post/toggle-like/?likeable=${post._id}&type=Post">
+                            <button type="button" class="btn btn-light btn-sm"><i class="far fa-heart"></i>Like</button>
+                        </a>
+                            <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse"
                             data-bs-target="#write-comment-${post._id}" aria-expanded="false"
                             aria-controls="collapseExample">
                             <i class="fas fa-comment"></i>Comment

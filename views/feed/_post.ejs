@@ -20,7 +20,15 @@
             </p>
             <!-- no fo  L C S -->
             <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
-                <span>0 Likes</span>
+                <span id="likes-span-<%= posts[i]._id%>">
+                    <%= posts[i].likes.length %>
+
+                    <% if(posts[i].likes.length <=1){%>
+                            Like
+                    <%} else {%>
+                            Likes
+                    <%} %>
+                </span>
                 <span class="">
                     <span id="comment-span-<%= posts[i]._id%>">
                             <%= posts[i].comments.length %>
@@ -37,8 +45,29 @@
                 </span>
             </p>
             <!-- buttons for L C and S -->
+            <% let userLiked = false %>
+            <%for(let like of posts[i].likes){ %>
+                <% if(like.user.id == user._id){ %>
+                    <% userLiked = true ;
+                    %>
+                <% } %>
+            <% } %>
+
             <p class="border-top d-flex justify-content-between px-3 mt-2 mb-2">
-                <button type="button" class="btn btn-light btn-sm"><i class="far fa-heart"></i>Like</button>
+                <a class="toggle-like" href="/users/feed/post/toggle-like/?likeable=<%= posts[i]._id %>&type=Post">
+                    <button type="button" class="btn btn-light btn-sm
+                        <% if(userLiked){ %>
+                            liked
+                        <% } %>
+                    ">
+                    <i class="
+                    <% if(userLiked){ %>
+                        fas
+                    <% }else{%> 
+                        far    
+                    <% } %>
+                    fa-heart"></i>Like</button>
+                </a>
                 <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse"
                     data-bs-target="#write-comment-<%= posts[i]._id%>" aria-expanded="false"
                     aria-controls="collapseExample">
@@ -101,3 +130,4 @@
 <%} %>
 
 <script src="/js/feed/_comment.js"></script>
+<script src="/js/feed/_like.js"></script>
