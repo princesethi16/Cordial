@@ -1,20 +1,27 @@
 <% for(let i=posts.length - 1 ; i>=0 ; i--){ %>
 
     <div class="card w-100 mt-4 comment-card" id="post-<%= posts[i].id %>">
-        <div class="card-body text-start pb-0">
-            <h6 class="card-title d-flex justify-content-between">
-                <span>
-                    <%= posts[i].user.name %>
-                </span>
-                <% if(locals.user && locals.user.id==posts[i].user.id){ %>
-                    <a class="delete-post-link" href="/users/feed/post/delete-post/<%= posts[i]._id %>">
-                        <span class="fw-bold fs-5">X</span>
-                    </a>
-                    <% } %>
-            </h6>
-            <p class="text-secondary fs-7">
-                <%= posts[i].updatedAt %>
-            </p>
+        <div class="card-body text-start pb-0 pt-2">
+            <div id="whole-post-<%= posts[i].id %>">
+                <img src="<%= posts[i].user.avatar %>" class="mb-4"
+                style="display: inline; height: 50px;width: 50px; border-radius: 50%;"
+                alt="">
+                <div class="ms-2 mt-1 d-inline-block w-85">
+                    <h6 class="card-title d-flex justify-content-between mb-0 w-100">
+                        <span>
+                            <%= posts[i].user.name %>
+                        </span>
+                        <% if(locals.user && locals.user.id==posts[i].user.id){ %>
+                            <a class="delete-post-link" href="/users/feed/post/delete-post/<%= posts[i]._id %>">
+                                <span class="fw-bold fs-5">X</span>
+                            </a>
+                            <% } %>
+                    </h6>
+                    <p class="text-secondary fs-7">
+                        <%= posts[i].updatedAt %>
+                    </p>
+                </div>
+            </div>
             <p class="card-text fs-6">
                 <%= posts[i].content %>
             </p>
@@ -40,7 +47,7 @@
                             <%} %>
 
                     </span>
-                    <span>0 share </span>
+                    <span class="ms-2">0 share </span>
                     
                 </span>
             </p>
@@ -55,7 +62,7 @@
 
             <p class="border-top d-flex justify-content-between px-3 mt-2 mb-2">
                 <a class="toggle-like" href="/users/feed/post/toggle-like/?likeable=<%= posts[i]._id %>&type=Post">
-                    <button type="button" class="btn btn-light btn-sm
+                    <button type="button" class="btn btn-light btn-sm button
                         <% if(userLiked){ %>
                             liked
                         <% } %>
@@ -80,29 +87,72 @@
 
             <div class="collapse py-2" id="write-comment-<%= posts[i]._id%>">
                 <!-- add all comments here -->
-                <div class="container-fluid">
+                <div class="container-fluid ps-3">
                     <div class="row">
-                        <div class="col-12" id="writeComment-<%= posts[i]._id%>">
+                        <div class="col-12 ps-0" id="writeComment-<%= posts[i]._id%>"> 
                             <% for(let j =posts[i].comments.length -1 ; j>= 0 ; j--){%>
-                                <div class="card w-100 mt-2 comments bg-light" id="comment-<%= posts[i].comments[j].id %>">
-                                    <div class="card-body bg-transparent pt-1">
-                                        <h6 class="d-flex justify-content-between">
-                                            <span>
-                                                <%= posts[i].comments[j].user.name %>
-                                            </span>
-                                            <% if(locals.user && (posts[i].comments[j].user.id==locals.user.id ||
-                                                posts[i].user.id==locals.user.id)){ %>
-                                                <a
-                                                class="delete-comment-link"
-                                                href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= posts[i].comments[j].id %>">
-                                                    <span class="fw-bold fs-6 mb-3">X</span>
-                                                </a>
-                                                <% } %>
-                                        </h6>
-                                        <p>
-                                            <%= posts[i].comments[j].content %>
-                                        </p>
+                                <div id="whole-comment-<%= posts[i].comments[j]._id %>">
+                                    <img src="<%= posts[i].comments[j].user.avatar %>" class=""
+                                    style="display: inline; height: 30px;width: 30px; border-radius: 50%;"
+                                    alt="">
+                                    <div class="card d-inline-flex w-auto h-auto mt-2 pb-2 bg-light comments" id="comment-<%= posts[i].comments[j].id %>">
+                                        <div class="card-body bg-transparent pt-1 w-auto pb-0">
+                                            <h6 class="d-inline-flex w-100 justify-content-between">
+                                                <span>
+                                                    <%= posts[i].comments[j].user.name %>
+                                                </span>
+                                                <% if(locals.user && (posts[i].comments[j].user.id==locals.user.id ||
+                                                    posts[i].user.id==locals.user.id)){ %>
+                                                    <a 
+                                                    class="d-inline-block ms-5 delete-comment-link"
+                                                    href="/users/feed/post/delete-comment/<%= posts[i].id %>/<%= posts[i].comments[j].id %>">
+                                                        <span class="fw-bold fs-6 mb-3">X</span>
+                                                    </a>
+                                                    <% } %>
+                                            </h6>
+                                            <p class="mb-0">
+                                                <%= posts[i].comments[j].content %>
+                                            </p>
+                                        </div>
                                     </div>
+
+                                    <div class="ms-5">
+                                        <!-- like reply division -->
+                                        <span style="font-size: 0.8rem;" id="likes-span-<%= posts[i].comments[j]._id%>">
+                                            <%= posts[i].comments[j].likes.length %>
+                        
+                                            <% if(posts[i].comments[j].likes.length <=1){%>
+                                                    Like
+                                            <%} else {%>
+                                                    Likes
+                                            <%} %>
+
+                                        </span>
+
+                                        <% let userLiked = false %>
+                                        <%for(let like of posts[i].comments[j].likes){ %>
+                                            <% if(like.user.id == locals.user._id){ %>
+                                                <% userLiked = true ;
+                                                %>
+                                            <% } %>
+                                        <% } %>
+
+                                        <a class="toggle-like" href="/users/feed/post/toggle-like/?likeable=<%= posts[i].comments[j]._id %>&type=Comment">
+                                            <div class="d-inline-block ms-3 button
+                                                <% if(userLiked){ %>
+                                                    liked
+                                                <% } %>
+                                            ">
+                                            <i class="
+                                            <% if(userLiked){ %>
+                                                fas
+                                            <% }else{%> 
+                                                far    
+                                            <% } %>
+                                            fa-thumbs-up"></i></div>
+                                        </a>
+                                    </div>
+
                                 </div>
                             <%} %>
                         </div>

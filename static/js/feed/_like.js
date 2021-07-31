@@ -1,6 +1,6 @@
 
     function toggleLike(likeBtn){
-        console.log('hey')
+        console.log(likeBtn);
 
             likeBtn.click(function (e){
                 e.preventDefault();
@@ -30,7 +30,7 @@
     
     
         function toggleLikeClass(likeBtn){
-            let button = likeBtn.find('button');
+            let button = likeBtn.find('.button');
             // toggle class in button
             button.toggleClass('liked');
             let icon = button.find('i');

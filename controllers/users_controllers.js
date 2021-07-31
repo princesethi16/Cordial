@@ -17,10 +17,25 @@ module.exports.feed = async (req,res)=>{
                 path: 'comments', // populate each comment in comments array
                 populate: // populate each specified field of comment
                 {
-                    path: 'user'// populate user field of comment
+                    path: 'user',// populate user field of comment
+                    
+
                 }
             }
-        ).populate(
+        )
+        .populate(
+            {
+                path: 'comments',
+                populate:
+                {
+                    path: 'likes',
+                    populate: {
+                        path: 'user'
+                    }
+                }
+            }
+        )
+        .populate(
             {
                 path: 'likes',
                 populate: {

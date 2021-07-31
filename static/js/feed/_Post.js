@@ -49,19 +49,26 @@
 
         return $('#newPostDOM').prepend(`
             <div class="card w-100 mt-4 comment-card" id="post-${ post._id }">
-                <div class="card-body text-start pb-0">
-                    <h6 class="card-title d-flex justify-content-between">
-                        <span>
-                            ${ user.name }
-                        </span>
-                            <a class="delete-post-link" href="/users/feed/post/delete-post/${ post._id}">
-                                <span class="fw-bold fs-5">X</span>
-                            </a>
-                            
-                    </h6>
-                    <p class="text-secondary fs-7">
-                        ${ post.updatedAt }
-                    </p>
+                <div class="card-body text-start pb-0 pt-2">
+                    <div id="whole-post-${post._id}">
+                        <img src="${user.avatar}" class="mb-4"
+                        style="display: inline; height: 50px;width: 50px; border-radius: 50%;"
+                        alt="">
+                        <div class="ms-2 mt-1 d-inline-block w-85">
+                            <h6 class="card-title d-flex justify-content-between mb-0 w-100">
+                                <span>
+                                    ${user.name}
+                                </span>
+                                    <a class="delete-post-link" href="/users/feed/post/delete-post/${post._id}">
+                                        <span class="fw-bold fs-5">X</span>
+                                    </a>
+                                
+                            </h6>
+                            <p class="text-secondary fs-7">
+                                ${post.updatedAt}
+                            </p>
+                        </div>
+                    </div>
                     <p class="card-text fs-6">
                         ${post.content }
                     </p>
@@ -76,14 +83,14 @@
                                     ${commentString}
         
                                 </span>
-                                <span>0 share </span>
+                                <span class="ms-2">0 share </span>
                             </span>
                         </span>
                     </p>
                     
                     <p class="border-top d-flex justify-content-between px-3 mt-2 mb-2">
                         <a class="toggle-like" href="/users/feed/post/toggle-like/?likeable=${post._id}&type=Post">
-                            <button type="button" class="btn btn-light btn-sm"><i class="far fa-heart"></i>Like</button>
+                            <button type="button" class="btn btn-light btn-sm button"><i class="far fa-heart"></i>Like</button>
                         </a>
                             <button type="button" class="btn btn-light btn-sm" data-bs-toggle="collapse"
                             data-bs-target="#write-comment-${post._id}" aria-expanded="false"
@@ -218,6 +225,7 @@
                     
                     let newComment = createComment(data.comment,data.user,data.post);
                     commentForm.find('textarea').val("");
+                    toggleLike($(' .toggle-like',newComment));
                     delComment($(` #deleteComment-button-${data.comment._id}`,newComment));
                     changeCommentCount($(`#comment-span-${data.post._id}`),data.post);
                     addNoty(data.message);
@@ -245,23 +253,43 @@
 
         return $(`#writeComment-${post._id}`).prepend(`
         
-            <div class="card w-100 mt-2 comments bg-light" id="comment-${comment._id}">
-                <div class="card-body bg-transparent pt-1">
-                    <h6 class="d-flex justify-content-between">
-                        <span>
-                            ${user.name}
-                        </span>
-                            <a
-                                class="delete-comment-link" id="deleteComment-button-${comment._id}"
+            <div id="whole-comment-${comment._id}" >
+                <img src="${user.avatar}" class=""
+                style="display: inline; height: 30px;width: 30px; border-radius: 50%;"
+                alt="">
+                <div class="card d-inline-flex w-auto h-auto mt-2 pb-2 bg-light comments" id="comment-${comment._id}">
+                    <div class="card-body bg-transparent pt-1 w-auto pb-0">
+                        <h6 class="d-inline-flex w-100 justify-content-between">
+                            <span>
+                                ${user.name}
+                            </span>
+                                <a 
+                                class="d-inline-block ms-5 delete-comment-link"
+                                id = "deleteComment-button-${comment._id}"
                                 href="/users/feed/post/delete-comment/${post._id}/${comment._id}">
-                                <span class="fw-bold fs-6 mb-3">X</span>
-                            </a>
-                            
-                    </h6>
-                    <p>
-                        ${comment.content}
-                    </p>
+                                    <span class="fw-bold fs-6 mb-3">X</span>
+                                </a>
+                                
+                        </h6>
+                        <p class="mb-0">
+                            ${comment.content}
+                        </p>
+                    </div>
                 </div>
+
+                <div class="ms-5">
+                    <!-- like reply division -->
+                    <span style="font-size: 0.8rem;" id="likes-span-${comment._id}">
+                        ${comment.likes.length}
+                        Like
+                    </span>
+
+                    <a class="toggle-like" href="/users/feed/post/toggle-like/?likeable=${comment._id}&type=Comment">
+                        <div class="d-inline-block ms-3 button">
+                        <i class="far fa-thumbs-up"></i></div>
+                    </a>
+                </div>
+
             </div>
         `);
     }

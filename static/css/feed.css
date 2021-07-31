@@ -21,6 +21,12 @@
 .fs-7 {
   font-size: 0.8rem; }
 
+.w-85 {
+  width: 85%; }
+
+.w-90 {
+  width: 90%; }
+
 .input-group textarea::-webkit-scrollbar {
   display: none; }
 
@@ -36,5 +42,3 @@
 
 .liked {
   color: #0c0ccc !important; }
-  .liked:hover {
-    background-color: gainsboro !important; }

@@ -30,6 +30,13 @@
     font-size: 0.8rem;
 }
 
+.w-85{
+    width: 85%;
+}
+.w-90{
+    width: 90%;
+}
+
 .input-group{
     textarea{
         &::-webkit-scrollbar{
@@ -56,8 +63,6 @@
 
 .liked{
     color: rgb(12, 12, 204) !important;
-    &:hover {
-        background-color: gainsboro !important;
-    }
+    
 }
 

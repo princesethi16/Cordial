@@ -1,3 +1,4 @@
+const Like = require('../models/likeSchema');
 const Post = require('../models/postSchema');
 const Comment = require('../models/commentsSchema');
 
@@ -39,10 +40,21 @@ module.exports.deletePost = (req,res)=>{
 
     Post.findById(postId,(err,post)=>{
         if(post){
-    
+
+            // delete the likes associated with the comments when a post is deleted
+            Like.deleteMany({likeable: {$in: post.comments}},(err)=>{
+                if(err){console.log('err in deleting the comment like while post deletion:',err); return;}
+            });
+
             // delete comments related to post in the db
             Comment.deleteMany({post: post._id},(err)=>{
                 if(err){console.log('error in deleting comments of post:',err); return;}
+            });
+
+            Like.deleteMany({likeable: post._id ,onModel: 'Post'},(err)=>{
+                console.log('likes of post deleted');
+                if(err){console.log('error in deleting likes of post:',err); return;}
+
             });
 
 
@@ -137,7 +149,15 @@ module.exports.deleteComment = async (req,res)=>{
             post.comments.pull({_id: commentId});
             post.save();
             
-            // 3. delete that comment from the comment collection
+            //3. delete the associated likes
+            Like.deleteMany({
+                likeable: comment._id,
+                onModel: 'Comment'
+            },(err)=>{
+                if(err){console.log('err in deleting the like of comment',err); return;}
+            });
+
+            // 4. delete that comment from the comment collection
             comment.remove();
         
             if(req.xhr){
