@@ -1,20 +1,56 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<!-- --------------------------------------------------------------------------------- -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 
-<h2 class="m-3"><%= title %> Page</h2>
+  
+  <!-- --------------------------------------------------------------------------------- -->
+<link rel="stylesheet" href="/css/profile.css">
 
-
-<div class="container-fluid">
+<div class="container-fluid bg-light">
     <div class="row d-flex justify-content-between">
-        <div class="col-md-4">
-            <div class="m-5">
-                <h3>*<%= currUser.name %></h3> 
-                <h4><%=  currUser.id %></h4>
-                <h4><%= currUser.email %> </h4>     
+        
+        <div class="col-12 d-flex flex-column bg-white shadow pb-4">
+            <!-- // about the user     -->
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <div class="mt-5 box-shadow-greyish rounded-circle border border-4 border-white">
+                    <img src="<%= currUser.avatar %>" alt="" style="height: 170px; width: 170px; border-radius: 50%;">
+                </div>
+                <p><h2 class="fw-bold"><%= currUser.name %></h2></p>
+            
+                <div class="row">
+                    <% if(currUser.id != locals.user.id){%>
+                        <div class="col-12" id="friendshipBtnDiv">
+                            <!-- add friend or remove frnd -->
+                            
+                            <% if(currFriendshipStatus == 'Friends'){ %>
+                                <a href="/users/send-friend-request/unfriend/?friendship=<%= currFriendship.id %>" class="friendshipActionBtn" data-action="unfriend"><button type="button" class="btn btn-outline-danger" ><i class="fas fa-user-times me-2"></i><span> Unfriend</span></button></a>
+                            <% }else if(currFriendshipStatus == 'Not Friend'){%>
+                            
+                                <a href="/users/send-friend-request/?from_user=<%= locals.user.id %>&to_user=<%= currUser.id %>" class="friendshipActionBtn" data-action="add friend"><button type="button" class="btn btn-info" ><i class="fas fa-user-plus me-2"></i><span> Add Friend</span></button></a>
+                            <%} else if(currFriendshipStatus == 'Request sent') { %>
+                                <a href="/users/send-friend-request/reply/?friendship=<%= currFriendship.id %>&reply=reject&to_user=<%= currUser.id %>" class="friendshipActionBtn" data-action="cancel"><button type="button" class="btn btn-secondary"><i class="fas fa-user-times me-2"></i><span> Cancel Request</span></button></a>
+
+                            <% } else if(currFriendshipStatus == 'Confirm Request'){%>
+                                <div class="dropdown" id="friendshipAction-dropdownBtn">
+                                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle-id="dropdown-menu-1" aria-expanded="false">
+                                        <i class="fas fa-user-check me-2"></i><span>Respond</span>
+                                    </button>
+                                    <ul id="dropdown-menu-1" class="dropdown-menu text-center mt-2 shadow" style="width: 15rem;" aria-labelledby="dropdownMenuButton1">
+                                      <li><a class="dropdown-item friendshipActionBtn" href="/users/send-friend-request/reply/?friendship=<%= currFriendship.id %>&reply=accept" data-action="accept"="">Confirm Request</a></li>
+                                      <li><a class="dropdown-item friendshipActionBtn" href="/users/send-friend-request/reply/?friendship=<%= currFriendship.id %>&reply=reject&to_user=" data-action="reject">Delete Request</a></li>
+                                     
+                                    </ul>
+                                  </div>
+                            <%} %>
+                        </div>
+                    <%} %>
+                </div>
             </div>
+            
+            
         </div>
-        <div class="col-md-4">
+    </div>
+        <div class="col-md-4 mt-4">
             <% if(locals.user.id == currUser.id){ %>
                 <div class="card w-100" >
                     <div class="card-body pb-0">
@@ -80,9 +116,7 @@
     </div>
 </div>
 
-<script src="/js/profile.js"></script>
+<script src="/js/profile/profile.js"></script>
+<script src="/js/profile/changeFriendshipBtn.js"></script>
 
 <!-- --------------------------------------------------------------------------------- -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>

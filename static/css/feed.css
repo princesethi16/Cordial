@@ -42,3 +42,9 @@
 
 .liked {
   color: #0c0ccc !important; }
+
+#right-section .card-body:hover::-webkit-scrollbar {
+  width: 20px; }
+
+#right-section .card-body h6:hover {
+  background-color: aliceblue !important; }

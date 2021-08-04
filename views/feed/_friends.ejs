@@ -1,20 +1,42 @@
-<div class="card w-100 bg-light">
-    <div class="card-body">
-        <h3 class="border-bottom pb-2">Friends</h3>
-    <% for(u of all_users){ 
-        
-        if(locals.user.id == u.id){
-            continue;
-        } %>
-
-        <p>
-            <a class="text-decoration-none" href="profile/<%= u.id %>">
-                <h6 class="text-start">
-                    <img src="/images/header profile image/images.png" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
-                    <%= u.name %>
+<div class="card w-100 bg-light" style="height: 83vh;">
+    <div class="card-body  pt-0 overflow-scroll" style="height: 40vh;">
+        <h3 class="border-bottom pb-2 bg-light w-100 position-absolute" style="z-index: 3;" >Friends</h3>
+        <div class="position-relative" style="top:25px" id="right-friends-div">
+            <% for(let friendship of userFriendships){ %>
+                <% let currFriend = friendship.friend; 
+                if(friendship.friendship.to_user){ %>
+                <h6 class="text-start p-2 mt-3" >
+                    <p class="mb-0">
+                        <a class="text-decoration-none" href="profile/<%= currFriend.id %>" >
+                            <img src="<%= currFriend.avatar %>" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
+                            <%= currFriend.name %>
+                        </a>
+                    </p>
                 </h6>
-            </a>
-        </p>
-    <% } %>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+    <div class="card-body  mt-3 pt-0 overflow-scroll" style="height: 50vh;">
+        <h3 class="border-bottom pb-2 bg-light w-100 position-absolute" style="z-index: 3;" >Users</h3>
+        <div class="position-relative" style="top:25px">
+            <% for(let u of all_users){ %>
+            
+            <% if(locals.user.id == u.id){ %>
+            <%    continue; %>
+            <%} %>
+            
+            <h6 class="text-start mt-3 p-2">
+                <p class="mb-0">
+                    <a class="text-decoration-none ms-3" href="profile/<%= u.id %>">
+                        <img src="<%= u.avatar %>" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
+                        <%= u.name %>
+                    </a>
+                </p>
+            </h6>
+
+            
+            <% } %>
+        </div>
     </div>
 </div>

@@ -5,12 +5,12 @@
 <% if(locals.user){%>
     <!-- Navbar content -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100 mb-2" style="z-index: 100;">
       <div class="container-fluid">
         <a class="navbar-brand fs-3" href="/">Cordial</a>
         <img
           src="/images/home/116333861-people-symbol-and-network-connection-on-black-background-in-social-media-and-digital-computer-techno.jpg"
-          style="height: 50px; width: 150px;" alt="" class="me-5">
+          style="height: 50px; width: 50px; border-radius: 50%;" alt="" class="me-5">
           
           <!-- flash message -->
         
@@ -23,6 +23,57 @@
                   <%= locals.user.name%>
               </a>
 
+            </li>
+            <li class="nav-item">
+              <div class=" ms-2 me-2 mt-0 position-relative">
+                <a class="btn btn-close-white rounded-circle pb-2 no-focus" style="background-color: gainsboro;" id="friendRequest-btn" data-bs-toggle="collapse"  href="friendRequest" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <i class="fas fa-user-friends"></i>
+                </a>
+
+                <%  let requests =user.friendRequests.length;
+                  if(requests){
+                  if( requests >=10){ %>
+                    <div id="friendRequestBadge" class=" position-absolute rounded-pill" style="width: 33px;" >    
+                        <span>9+</span>
+                    <%} else{ %>
+                    <div id="friendRequestBadge" class=" position-absolute rounded-circle" style="width: 25px; right: -12px;">    
+                    <%= requests %>  
+                
+                    <%  } %>
+                    
+                  </div>
+                <% } %>
+              </div>
+              <div class="collapse  position-absolute" style="z-index: 2;" id="friendRequest">
+                <div class="card card-body " style="width: 22rem; left: -10vw; top: 2vh;">
+                  <h3>Friend Requests</h3>
+                  <ul class="list-group list-group-flush" id="friendRequests-ul">
+                    <% if(user.friendRequests.length == 0){%>
+                      <h5 class="mt-3 text-secondary">No pending Friend Requests</h5>  
+                    <%} %>
+                    <% for(let i=locals.user.friendRequests.length -1; i>=0; i--){%>
+                      <% let friendRequest = locals.user.friendRequests[i]
+                          let requester = friendRequest.from_user
+                      %>
+      
+                      <li class="list-group-item border-0 mb-2" id="FriendRequestElement-<%= friendRequest.id %>">
+                        
+                        <a href="/users/profile/<%= requester.id %>" class=" text-decoration-none text-dark fw-bold fs-6">
+                          <img src="<%= requester.avatar %>" style="height: 60px; width: 60px;" class="rounded-circle ms-2 me-3" alt="">  
+                          <%= friendRequest.from_user.name  %>
+                        </a>
+
+                        <div class="mt-2 d-flex justify-content-evenly text-secondary fs-6" id="friendReqReplyDiv-<%= friendRequest.id %>">
+                        
+                          <a href="/users/send-friend-request/reply/?friendship=<%= friendRequest.id %>&reply=accept" class="friendRequestReplyBtn" data-reply="accept"><button type="button " class="btn btn-info btn-sm ms-5 " style="width: 80px;">Accept</button></a>
+                          <a href="/users/send-friend-request/reply/?friendship=<%= friendRequest.id %>&reply=reject&type=reject" class="friendRequestReplyBtn" data-reply="reject"><button type="button" class="btn btn-danger btn-sm ms-1 " style="width: 80px;">Delete</button></a>
+                        </div>
+
+                      </li>
+                    <%} %>
+                  </ul>
+                </div>
+              </div>
             </li>
             <li class="nav-item ms-4 ">
               <a class="btn btn-danger mt-1" href="/users/sign-out" role="button">sign-out</a>
@@ -61,3 +112,6 @@
     </nav>
 
 <% } %>
+
+
+<script src="/js/_header.js"></script>

@@ -66,3 +66,24 @@
     
 }
 
+#right-section{
+    
+    
+    .card-body{
+        
+        &:hover{
+            &::-webkit-scrollbar{
+                width: 20px;
+            }
+        }
+        h6{
+            &:hover{
+                background-color: aliceblue !important;
+            }
+        }
+    }
+    
+}
+
+
+

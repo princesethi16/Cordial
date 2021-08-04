@@ -9,23 +9,34 @@ passport.use(new LocalStrategy(
         usernameField: 'email', // email to act as username
         passReqToCallback: true
     },
-    function(req,email,password,done){
+    async function(req,email,password,done){
         // find the user and establish the identity
-        User.findOne({email: email}).select('+password').exec((err,foundUser)=>{
-            if(err){
-                req.flash('error',err);
-                return done(err);
-            }
-            else if(!foundUser || foundUser.password != password){
+        try{
+            let foundUser = await User.findOne({email: email})
+            .populate(
+                {
+                    path: 'friendRequests',
+                    populate: 'from_user'
+                }
+            );
+
+            
+            if(!foundUser || foundUser.password != password){
                 req.flash('error','Invalid Email/Password')
                 return done(null,false);
             }
 
             else{
+                
                 return done(null,foundUser);
             }
-
-        });
+        }
+        catch(err){
+            if(err){
+                req.flash('error',err);
+                return done(err);
+            }
+        }
     }
 ));
 

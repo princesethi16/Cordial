@@ -4,3 +4,36 @@
         background-color: #d0d1d4 !important;
     }   
 }
+
+#friendRequests-ul{
+    li{
+        &:hover{
+            background-color: rgb(218, 233, 247);
+        }
+    }
+}
+
+#friendRequestBadge{
+    background-color: rgb(230, 10, 10) !important;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    color: white !important;
+    top: -5px;
+    right: -15px;
+}
+
+.no-focus{
+    &:focus{
+        box-shadow: 0 0 0 0 !important;
+    }
+}
+.blued{
+    color: blue !important;
+
+}
+
+nav{
+    box-shadow: 0 0 10px 4px grey;
+}

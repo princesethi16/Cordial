@@ -52,7 +52,7 @@ module.exports.deletePost = (req,res)=>{
             });
 
             Like.deleteMany({likeable: post._id ,onModel: 'Post'},(err)=>{
-                console.log('likes of post deleted');
+                
                 if(err){console.log('error in deleting likes of post:',err); return;}
 
             });

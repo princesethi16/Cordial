@@ -1,6 +1,6 @@
 
     function toggleLike(likeBtn){
-        console.log(likeBtn);
+        
 
             likeBtn.click(function (e){
                 e.preventDefault();
@@ -11,7 +11,7 @@
     
         function ajaxCall(likeBtn){
             let url = likeBtn.attr('href');
-            console.log(url);
+            
             $.ajax({
                 url: url,
                 type: 'Post',
@@ -56,7 +56,7 @@
     }
 
     let likeBtns = $('.toggle-like');
-    console.log(likeBtns);
+    
     for(let i=0; i<likeBtns.length; i++){
         let likeBtn = likeBtns.eq(i);
         toggleLike(likeBtn);

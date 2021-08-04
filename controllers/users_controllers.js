@@ -1,7 +1,7 @@
 // controller callback functions for the users
 const Post = require('../models/postSchema');
 const User = require('../models/userSchema');
-
+const userPopulation = require('./userPopulation');
 
 // this is callback function used by users route file
 module.exports.feed = async (req,res)=>{
@@ -10,6 +10,12 @@ module.exports.feed = async (req,res)=>{
     // and callback function is called by exec function
     try{
         let user = req.user;
+        // populate user friendrequests
+        user = await userPopulation.popupate_user_friendRequests(user);
+        //populate get user friends
+        let friendships_Of_LoggedInUser = await userPopulation.getFriends(user);
+
+        // get all posts;
         let posts = await Post.find({})
         .populate('user')
         .populate(
@@ -43,16 +49,15 @@ module.exports.feed = async (req,res)=>{
                 }
             }
         );
-    
-        let users = await User.find({});
         
-        console.log(res.locals.flash);
-
+        let users = await User.find({});
+    
         return res.render('feed',{
             title: 'Feed',
             posts: posts,
             currUser: user,
-            all_users: users
+            all_users: users,
+            userFriendships: friendships_Of_LoggedInUser
         });
     }
     catch(err){

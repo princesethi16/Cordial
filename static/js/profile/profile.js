@@ -17,3 +17,23 @@
             
     });
 }
+
+
+
+
+
+// for the change friendship buttons
+$(document).ready(function() {
+    $(".dropdown-toggle").click(function(){
+        
+        let toggleDivId = $(this).attr('data-toggle-id');
+        toggleDiv = $(` #${toggleDivId}`);
+        toggleDiv.toggleClass('show');
+        friendRequest_Btn.toggleClass('no-focus blued');
+        
+        
+    });
+});
+
+
+

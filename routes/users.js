@@ -18,6 +18,6 @@ router.get('/sign-out',userController.destroySession);
 router.use('/profile',require('./profile'));
 router.use('/feed/post',require('./post'));
 
-
+router.use('/send-friend-request',require('./friendship'));
 
 module.exports = router; //used by the home route file
