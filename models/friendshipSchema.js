@@ -9,8 +9,20 @@ const friendshipSchema = new mongoose.Schema({
     to_user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    chat: [
+        {
+            content: {
+                type: String,
+                required: true
+            },
+            sender: {
+                type: String,
+                required: true
+            }
 
+        }
+    ]
 },{
     timestamps: true
 });

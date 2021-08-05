@@ -1,4 +1,4 @@
-const User = require('../models/userSchema');
+const Friendship = require('../models/friendshipSchema');
 
 module.exports.chatSockets = function(socketServer){
     let io = require('socket.io')(socketServer);
@@ -9,7 +9,7 @@ module.exports.chatSockets = function(socketServer){
 
             console.log('connection disconnected!',socket.id);
         });
-        let users = User.find()
+    
         socket.on('join_room',function(data){
             console.log('joining request recieved',data);
             socket.join(data.chatRoom);
@@ -26,8 +26,16 @@ module.exports.chatSockets = function(socketServer){
         });
 
 
-        socket.on('send_message',function(data){
-            console.log('message sent : ',data);
+        socket.on('send_message',async function(data){
+                let friendship = await Friendship.findById(data.chatRoom);
+                let chatObj = new Object();
+                chatObj = {
+                    content: data.msg,
+                    sender: data.user_email
+                }
+                friendship.chat.push(chatObj);
+                friendship.save();
+                console.log(friendship.chat);
             io.in(data.chatRoom).emit('recieve_message',data);
         });
 

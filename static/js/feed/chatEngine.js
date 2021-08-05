@@ -26,7 +26,7 @@ class ChatEngine{
                 console.log('a user joined',data);
             });
 
-            let inputMsgDiv = $('#input-message-div');
+            let inputMsgDiv = $(`#input-message-div-${ self.userFriendshipId }`);
             inputMsgDiv.keypress(function(){
             
                 self.socket.emit('userTyping',{
@@ -38,7 +38,7 @@ class ChatEngine{
                 
             });
             self.socket.on('friendTyping',function(data){
-            
+                console.log('friend typing');
                 if(self.userEmail != data.user_email){
                     
             
@@ -54,7 +54,7 @@ class ChatEngine{
                 });
             });
             self.socket.on('friendStoppedTyping',function(data){
-                
+                console.log('frind typing stoppped')
                 if(self.userEmail != data.user_email){
                     
 
@@ -108,7 +108,8 @@ function addMsgToChat(thisUserEmail,data){
 }
 
 function friendTyping(data){
-    let typingDiv = $('.typing');
+    let chatBox = $(`#chat_box_collapse-${data.chatRoom}`);
+    let typingDiv = chatBox.find('.typing');
     if(data.isTyping){
         typingDiv.removeClass('hide');
     }

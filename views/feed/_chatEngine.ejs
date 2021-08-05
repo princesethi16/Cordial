@@ -46,16 +46,21 @@
                         </ul>
                     </div>
                     <div class="body">
-                    
-                        <!-- *** for the msg
-                        <li class="incoming">
-                            <div class="bubble">
-                                <p>Hey, Father's Day is coming up..</p>
-                            </div>
-                        </li>
-                         -->
+                        <% let chats = friendship.friendship.chat %>
+                        <% for(let i = chats.length -1 ; i>= 0 ;i--){ %>
+                        <!-- *** for the msg -->
+                            <% if(chats[i].sender == currFriend.email){%>
+                            <li class="incoming">
+                            <%}else{%>
+                            <li class="outgoing">
+                            <%} %>
+                                <div class="bubble">
+                                    <p><%= chats[i].content %></p>
+                                </div>
+                            </li>
+                        <% } %> 
                         
-                        <!--  *** for typing -->
+                    
                         
                     </div>
                     <div class="foot">
