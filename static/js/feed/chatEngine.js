@@ -1,7 +1,8 @@
 class ChatEngine{
-    constructor(chatBoxId,userEmail){
+    constructor(chatBoxId,userEmail,userFriendshipId){
         this.chatBox = $(` #${chatBoxId}`);
         this.userEmail = userEmail;
+        this.userFriendshipId = userFriendshipId;
         this.socket = io.connect('http://localhost:5000');
         if(this.userEmail){
             this.connectionHandler();
@@ -16,9 +17,9 @@ class ChatEngine{
         this.socket.on('connect',function(){
             console.log('connection established using sockets...!')
             
-            self.socket.emit('join_room',{
+            self.socket.emit(`join_room`,{
                 user_email: self.userEmail,
-                chatRoom: 'cordial'
+                chatRoom: `${self.userFriendshipId}`
             });
 
             self.socket.on('user_joined',function(data){
@@ -31,16 +32,16 @@ class ChatEngine{
                 self.socket.emit('userTyping',{
                     
                     user_email: self.userEmail,
-                    chatRoom: 'cordial',
+                    chatRoom: `${self.userFriendshipId}`,
                     isTyping: true
                 });
                 
             });
             self.socket.on('friendTyping',function(data){
-                console.log(data.isTyping);
+            
                 if(self.userEmail != data.user_email){
                     
-                    console.log('typing')
+            
                     friendTyping(data);
                 }     
             });
@@ -48,29 +49,29 @@ class ChatEngine{
             
                 self.socket.emit('userStoppedTyping',{
                     user_email: self.userEmail,
-                    chatRoom: 'cordial',
+                    chatRoom: `${self.userFriendshipId}`,
                     isTyping: false
                 });
             });
             self.socket.on('friendStoppedTyping',function(data){
-                console.log(data.isTyping)
+                
                 if(self.userEmail != data.user_email){
-                    console.log('stopped typing')
+                    
 
                     friendTyping(data);
                 }     
             });
             
             
-            let sendBtn = $('#send-message');
+            let sendBtn = $(`#send-message-${self.userFriendshipId}`);
             sendBtn.click(function(){
-                let inputMsgDiv = $('#input-message-div');
+                let inputMsgDiv = $(`#input-message-div-${self.userFriendshipId}`);
                 let msg = inputMsgDiv.val();
                 if(msg != ''){
                     inputMsgDiv.val('');
                     self.socket.emit('send_message',{
                         user_email: self.userEmail,
-                        chatRoom: 'cordial',
+                        chatRoom: `${self.userFriendshipId}`,
                         msg: msg
                     });
                 }
@@ -79,6 +80,7 @@ class ChatEngine{
         
 
             self.socket.on('recieve_message',function(data){
+                console.log(data);
                 addMsgToChat(self.userEmail,data);
             });
 
@@ -93,7 +95,9 @@ function addMsgToChat(thisUserEmail,data){
         msgType = 'outgoing';
     }
     // append the li in chat
-    let chatDiv = $('.body');
+    let chatBox = $(`#chat_box_collapse-${data.chatRoom}`);
+    console.log(chatBox);
+    let chatDiv = chatBox.find('.body');
     chatDiv.prepend(`
         <li class="${msgType}">
             <div class="bubble">

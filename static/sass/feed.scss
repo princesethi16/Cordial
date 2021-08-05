@@ -82,7 +82,8 @@ a{
                 width: 20px;
             }
         }
-        h6{
+        div .container{
+            overflow-x: hidden;
             &:hover{
                 background-color: aliceblue !important;
             }

@@ -49,5 +49,7 @@ a:hover {
 #right-section .card-body:hover::-webkit-scrollbar {
   width: 20px; }
 
-#right-section .card-body h6:hover {
-  background-color: aliceblue !important; }
+#right-section .card-body div .container {
+  overflow-x: hidden; }
+  #right-section .card-body div .container:hover {
+    background-color: aliceblue !important; }

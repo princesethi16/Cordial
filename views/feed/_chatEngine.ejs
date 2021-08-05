@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="/css/_chatEngine.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js" ></script>
+<script src="/js/feed/chatEngine.js"></script>
+<div class="pt-4">
+    <% for(let friendship of userFriendships){ %>
+    <% let currFriend = friendship.friend; 
+    if(friendship.friendship.to_user){ %>
+        <div class="text-start p-2 pe-3 mt-1 container d-flex justify-content-between" >
+            <p class="mb-0 d-inline-block " style="max-width: 150px;">
+                <a class="text-decoration-none" href="profile/<%= currFriend.id %>" >
+                    <img src="<%= currFriend.avatar %>" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
+                    <%= currFriend.name %>
+                </a>
+            </p>
+            <div class = "Container-btn" style="display: inline-block;">
+                <p class="mb-0">
+                    <a class="" data-bs-toggle="collapse" href="#chat_box_collapse-<%= friendship.friendshipId %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fas fa-comments me-2"></i>
+                    </a>
+                  </p>
+            </div>
+        </div>
+        <div class="chat-box collapse" id="chat_box_collapse-<%= friendship.friendshipId %>">
+            <div class="Container" id="user-chat-box-<%= friendship.friendshipId %>">
+                <div class="chat_box">
+                    <div class="head">
+                        <div class="user">
+                            <div class="avatar">
+                                <img src="<%= currFriend.avatar %>" style="height: 50px; width: 50px;" />
+                            </div>
+                            <div class="name"><%= currFriend.name %></div>
+                            <div class="typing hide">
+                                
+                                <div class="bubble">
+                                    <span>Typing</span>
+                                    <div class="ellipsis dot_1"></div>
+                                    <div class="ellipsis dot_2"></div>
+                                    <div class="ellipsis dot_3"></div>
+                                </div>
+                            </div> 
+                        </div>
+                        <ul class="bar_tool">
+                            <li><span class="alink"><i class="fas fa-phone"></i></span></li>
+                            <li><span class="alink"><i class="fas fa-video"></i></span></li>
+                            <li><span class="alink"><a href="close" class="chat-box-close"><i class="fas fa-window-close"></i></a></span></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                    
+                        <!-- *** for the msg
+                        <li class="incoming">
+                            <div class="bubble">
+                                <p>Hey, Father's Day is coming up..</p>
+                            </div>
+                        </li>
+                         -->
+                        
+                        <!--  *** for typing -->
+                        
+                    </div>
+                    <div class="foot">
+                        <input type="text" class="msg" id="input-message-div-<%= friendship.friendshipId %>" placeholder="Type a message..." />
+                        <button type="button" id="send-message-<%= friendship.friendshipId %>" ><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <% if(user){ %>
+            
+            <script>
+                new ChatEngine(`user-chat-box-<%= friendship.friendshipId %>`,'<%= user.email %>','<%= friendship.friendshipId %>');
+                </script>
+            <% } %>
+        <% } %>
+    <% } %>
+</div>
+    
+
+
