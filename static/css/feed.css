@@ -5,6 +5,9 @@
   #posts-section::-webkit-scrollbar {
     display: none; }
 
+a:hover {
+  text-decoration: none !important; }
+
 .comment-card i {
   margin-right: 9px; }
 

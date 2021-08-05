@@ -52,8 +52,6 @@ module.exports.getFriends = async (user)=>{
         
     }
 
-    console.log(friendsArray);
-
     return friendsArray;
 };
 

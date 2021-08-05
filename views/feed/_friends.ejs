@@ -1,6 +1,6 @@
 <div class="card w-100 bg-light" style="height: 83vh;">
     <div class="card-body  pt-0 overflow-scroll" style="height: 40vh;">
-        <h3 class="border-bottom pb-2 bg-light w-100 position-absolute" style="z-index: 3;" >Friends</h3>
+        <h3 class="border-bottom pb-2 bg-light w-100 position-absolute" style="z-index: 2;" >Friends</h3>
         <div class="position-relative" style="top:25px" id="right-friends-div">
             <% for(let friendship of userFriendships){ %>
                 <% let currFriend = friendship.friend; 
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="card-body  mt-3 pt-0 overflow-scroll" style="height: 50vh;">
-        <h3 class="border-bottom pb-2 bg-light w-100 position-absolute" style="z-index: 3;" >Users</h3>
+        <h3 class="border-bottom pb-2 bg-light w-100 position-absolute" style="z-index: 2;" >Users</h3>
         <div class="position-relative" style="top:25px">
             <% for(let u of all_users){ %>
             

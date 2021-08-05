@@ -11,6 +11,15 @@ const flash = require('connect-flash');
 var cors = require('cors');
 const customMiddleware = require('./config/customMiddleware');
 
+//for adding socket.io to the app
+const http = require('http');
+const chatServer = http.createServer(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chatServer is listening on port:',5000);
+
+
+
 // mailer for notifications
 const nodemailer = require('nodemailer');
 
