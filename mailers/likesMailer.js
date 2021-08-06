@@ -1,5 +1,5 @@
 const nodemailer = require('../config/nodemailer');
-
+const env = require('../config/environment');
 // this is another way of exporting the methods
 exports.newLike = (post,like) => {
 
@@ -14,7 +14,7 @@ exports.newLike = (post,like) => {
     let htmlString = nodemailer.renderTemplate(data,'/likes/likesMailer.ejs')
 
     nodemailer.transporter.sendMail({
-        from: 'sethiprince007@gmail.com',
+        from: env.cordial_mailer_email_id,
         to: post.user.email,
         subject: `${like.user.name} liked Your Post`,
         html: htmlString

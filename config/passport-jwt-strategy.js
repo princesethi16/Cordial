@@ -4,10 +4,12 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const User = require('../models/userSchema');
 
+const env = require('./environment');
+
 let opts = {};
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'cordial';
+opts.secretOrKey = env.jwt_secretOrKey;
 
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {

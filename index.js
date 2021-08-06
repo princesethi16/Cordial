@@ -4,11 +4,12 @@ const express = require('express');
 const app = express();
 const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
+const env = require('./config/environment');
 const port = 8000;
 const db = require('./config/mongoose');
 const UserDb = require('./models/userSchema');
 const flash = require('connect-flash');
-var cors = require('cors');
+var cors = require('cors'); // important for the cross origin
 const customMiddleware = require('./config/customMiddleware');
 
 //for adding socket.io to the app
@@ -38,14 +39,16 @@ const cookieParser = require('cookie-parser');
 
 // sass package
 const sassMiddleware = require('node-sass-middleware');
-
-app.use(sassMiddleware({
-    src: './static/sass',
-    dest: './static/css',
-    prefix: '/css',
-    debug: true,
-    outputStyle: 'extented' 
-}));
+ 
+if(env.name == 'development'){
+    app.use(sassMiddleware({
+        src: path.join(__dirname,env.static_path,'sass'),
+        dest: path.join(__dirname,env.static_path,'css'),
+        prefix: '/css',
+        debug: true,
+        outputStyle: 'extented' 
+    }));
+}
 
 
 // telling app to use urlencoder inorder to parse the req.body data
@@ -62,7 +65,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(session({
     name: 'Cordial',
     // TODO change the secret before deployment in production mode
-    secret: 'blahblahsomething',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {
@@ -87,7 +90,10 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
 // set up the middleware for the static files like css images frontend javascript and images 
-app.use(express.static('./static'));
+app.use(express.static(`.${env.static_path}`));
+
+
+
 
 // to make the uploads path available to browser for getting the uploaded files
 app.use('/uploads',express.static(__dirname + '/uploads'));

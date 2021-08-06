@@ -98,12 +98,14 @@ module.exports.newComment = async (req,res)=>{
             post = await post.populate('user','name email').execPopulate();
             comment = await comment.populate('user','name email').execPopulate();
             // commentsMailer.newComment(post,comment); when doing without Kue.js
-            let job = queue.create('emails',{comment: comment, post: post}).save(function(err){
-                if(err){console.log('error in creating the job of sending mail when new comment is posted',err);return;}
-                else{
-                    console.log('job enqueued!',job.id);
-                }
-            });
+            if(req.user.id != post.user.id){
+                let job = queue.create('emails',{comment: comment, post: post}).save(function(err){
+                    if(err){console.log('error in creating the job of sending mail when new comment is posted',err);return;}
+                    else{
+                        console.log('job enqueued!',job.id);
+                    }
+                });
+            }
 
             if(req.xhr){
                 return res.status(200).json({

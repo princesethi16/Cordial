@@ -1,5 +1,5 @@
 const nodemailer = require('../config/nodemailer');
-
+const env = require('../config/environment');
 exports.ResetPasswordLink = (user,accessToken)=>{
     let data = {
         user: user,
@@ -8,7 +8,7 @@ exports.ResetPasswordLink = (user,accessToken)=>{
     let htmlString = nodemailer.renderTemplate(data,'/resetpassword/forgotPassword.ejs')
 
     nodemailer.transporter.sendMail({
-        from: 'sethiprince007@gmail.com',
+        from: env.cordial_mailer_email_id,
         to: user.email,
         subject: 'Link for resetting the password',
         html: htmlString

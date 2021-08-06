@@ -1,5 +1,5 @@
 const nodemailer = require('../config/nodemailer');
-
+const env = require('../config/environment');
 // this is another way of exporting the methods
 exports.newComment = (post,comment) => {
 
@@ -9,9 +9,9 @@ exports.newComment = (post,comment) => {
     }
 
     let htmlString = nodemailer.renderTemplate(data,'/comments/newComment.ejs')
-
+    env.cordial_mailer_email_id
     nodemailer.transporter.sendMail({
-        from: 'sethiprince007@gmail.com',
+        from: env.cordial_mailer_email_id,
         to: post.user.email,
         subject: 'New Comment Posted',
         html: htmlString

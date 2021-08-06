@@ -55,12 +55,14 @@ module.exports.toggleLike = async (req,res)=>{
                 if(type == 'Post'){
                     likeable = await likeable.populate('user','name email').execPopulate();
                     like = await like.populate('user','name email').execPopulate();
-                    let job = queue.create('emails',{like: like, post: likeable}).save(function(err){
-                        if(err){console.log('error in creating the job of sending mail when new like is posted',err);return;}
-                        else{
-                            console.log('job enqueued!',job.id);
-                        }
-                    });
+                    if(req.user.id != likeable.user.id){
+                        let job = queue.create('emails',{like: like, post: likeable}).save(function(err){
+                            if(err){console.log('error in creating the job of sending mail when new like is posted',err);return;}
+                            else{
+                                console.log('job enqueued!',job.id);
+                            }
+                        });
+                    }
                 }
             }
             

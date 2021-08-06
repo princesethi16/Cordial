@@ -1,6 +1,8 @@
 const User = require('../../../models/userSchema');
 const jwt = require('jsonwebtoken');
 
+const env = require('../../../config/environment');
+
 // create new session for existing user (from sign in page to createSession to feed)
 module.exports.createSession = async (req,res)=>{
     try{
@@ -18,7 +20,7 @@ module.exports.createSession = async (req,res)=>{
             return res.json(200,{
                 data: {
                     message: 'logged in successfully',
-                    token: jwt.sign(user.toJSON(),'cordial',{expiresIn: '300000'}),
+                    token: jwt.sign(user.toJSON(),env.jwt_secretOrKey,{expiresIn: '300000'}),
                 }
             });
         }
