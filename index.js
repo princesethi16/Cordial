@@ -62,7 +62,7 @@ console.log(env.morgan.mode)
 app.use(morgan(env.morgan.mode , env.morgan.options));
 
 // telling app to use urlencoder inorder to parse the req.body data
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: false}));
 
 // telling app to use cookie parser
 app.use(cookieParser());

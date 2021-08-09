@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 
 const sass = require('gulp-sass')(require('sass'));
-const cssnano = require('gulp-cssnano');
+const minifyCss = require('gulp-minify-css');
 const rev = require('gulp-rev');
 const uglify = require('gulp-uglify-es').default;
 const imagemin = require('gulp-imagemin');
@@ -13,7 +13,7 @@ gulp.task('css', function(done){
     console.log('minifying css...');
     gulp.src('./static/sass/**/*.scss')
     .pipe(sass())
-    .pipe(cssnano())
+    .pipe(minifyCss())
     .pipe(gulp.dest('./static.css'));
 
     return gulp.src('./static/**/*.css')
@@ -64,7 +64,8 @@ gulp.task('clean:static', function(done){
     done();
 });
 
-gulp.task('build', gulp.series('clean:static', 'css', 'js', 'images'), function(done){
+gulp.task('build', gulp.series('clean:static', 'css', 'images','js'), function(done){
     console.log('Building static');
     return;
+
 });
