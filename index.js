@@ -2,6 +2,10 @@
 
 const express = require('express');
 const app = express();
+
+// for rendering the static files which are hashed! by rev
+require('./config/view-helper')(app);
+
 const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
 const env = require('./config/environment');
@@ -18,7 +22,6 @@ const chatServer = http.createServer(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chatServer is listening on port:',5000);
-
 
 
 // mailer for notifications
@@ -50,6 +53,13 @@ if(env.name == 'development'){
     }));
 }
 
+
+// for adding the logs in production_logs file
+const morgan = require('morgan');
+
+// for logger to store the production logs in a file
+console.log(env.morgan.mode)
+app.use(morgan(env.morgan.mode , env.morgan.options));
 
 // telling app to use urlencoder inorder to parse the req.body data
 app.use(express.urlencoded());
@@ -91,6 +101,7 @@ app.use(passport.setAuthenticatedUser);
 
 // set up the middleware for the static files like css images frontend javascript and images 
 app.use(express.static(`.${env.static_path}`));
+console.log(env.static_path);
 
 
 
@@ -115,6 +126,7 @@ app.use(cors());
 
 // import the router module for use
 var router = require('./routes/home');
+const { getLogger } = require('nodemailer/lib/shared');
 
 // use the express router
 app.use('/', router);

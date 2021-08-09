@@ -1,8 +1,18 @@
+const fs = require('fs');
+const rfs = require('rotating-file-stream');
+const path = require('path');
 
+const logDirectory = path.join(__dirname, '../production_logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+const accessLogStream = rfs.createStream('access.log',{
+    interval: '1d',
+    path: logDirectory
+});
 
 const development = {
     name: 'development',
-    static_path: "/" + process.env.CORDIAL_STATIC_PATH,
+    static_path: "/" + 'static',
     session_cookie_key: 'blahblahsomething',
     db: 'cordial_development',
     node_mailer_smtp: {
@@ -21,6 +31,10 @@ const development = {
     google_clientSecret: 'XEMmDlX1C4_3P9_cv8GfBAxe',
     google_callbackURL: 'http://localhost:8000/authentication/google/callback',
     jwt_secretOrKey: 'cordial',
+    morgan: {
+        mode: 'dev',
+        options: {stream: accessLogStream}
+    }
 
 }
 const production = {
@@ -44,6 +58,11 @@ const production = {
     google_clientSecret: process.env.CORDIAL_GOOGLE_CLIENT_SECRET,
     google_callbackURL: process.env.CORDIAL_GOOGLE_CALL_BACK_URL,
     jwt_secretOrKey:   process.env.CORDIAL_JWT_SECRETORKEY,
+    morgan: {
+        mode: 'combined',
+        options: {stream: accessLogStream}
+    }
 }
 
 module.exports = eval((process.env.CORDIAL_ENVIRONMENT) == 'production' ? production : development);
+// module.exports = development;

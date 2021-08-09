@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="/css/_chatEngine.css">
+<link rel="stylesheet" href="<%= staticPath('css/_chatEngine.css') %>">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js" ></script>
-<script src="/js/feed/chatEngine.js"></script>
+<script src="<%= staticPath('js/feed/chatEngine.js') %>"></script>
 <div class="pt-4">
     <% for(let friendship of userFriendships){ %>
     <% let currFriend = friendship.friend; 

@@ -1,0 +1,1 @@
+class ChatBoxBody{constructor(o,t){this.chatBox=o,this.user=t}closeChatBox(){console.log(this.chatBox);let o=this.chatBox.find(".chat-box-close");console.log(o),o.click((o=>{o.preventDefault(),this.chatBox.toggleClass("show")}))}}let allChatBoxes=$(".chat-box");for(let o=0;o<allChatBoxes.length;o++){new ChatBoxBody(allChatBoxes.eq(o)).closeChatBox()}
