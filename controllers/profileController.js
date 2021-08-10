@@ -1,5 +1,6 @@
 // callback function for the posts
 const User = require('../models/userSchema');
+const Post = require('../models/postSchema');
 const fs = require('fs');
 const path = require('path');
 const userPopulation = require('./userPopulation');
@@ -53,7 +54,39 @@ module.exports.profile = async (req,res)=>{
             
         }
 
-        console.log(friendshipStatus);
+        let posts = await Post.find({user: user._id})
+        .populate('user')
+        .populate(
+            {
+                path: 'comments', // populate each comment in comments array
+                populate: // populate each specified field of comment
+                {
+                    path: 'user',// populate user field of comment
+                    
+
+                }
+            }
+        )
+        .populate(
+            {
+                path: 'comments',
+                populate:
+                {
+                    path: 'likes',
+                    populate: {
+                        path: 'user'
+                    }
+                }
+            }
+        )
+        .populate(
+            {
+                path: 'likes',
+                populate: {
+                    path: 'user'
+                }
+            }
+        );
 
         
         return res.render('profile',{
@@ -62,7 +95,8 @@ module.exports.profile = async (req,res)=>{
             currUser: user,
             friendships_Of_LoggedInUser: friendships_Of_LoggedInUser,
             currFriendship: currFriendship,
-            currFriendshipStatus: friendshipStatus
+            currFriendshipStatus: friendshipStatus,
+            posts: posts
         });
     }catch(err){
         console.log('error in loading the profile page',err);

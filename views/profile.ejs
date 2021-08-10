@@ -5,6 +5,7 @@
   
   <!-- --------------------------------------------------------------------------------- -->
 <link  rel="stylesheet" href="<%= staticPath('css/profile.css') %>">
+<link rel="stylesheet" href="<%= staticPath('css/feed.css') %>">
 
 <div class="container-fluid bg-light">
     <div class="row d-flex justify-content-between">
@@ -50,6 +51,8 @@
             
         </div>
     </div>
+
+    <div class="row d-flex justify-content-center">
         <div class="col-md-4 mt-4">
             <% if(locals.user.id == currUser.id){ %>
                 <div class="card w-100" >
@@ -113,7 +116,19 @@
                 </div>
             <% } %>
         </div>
+        
+        
+    
+        <div class="col-md-5" id="newPostDOM">    
+            <section id="display-posts-section" class="mt-3">
+                <%- include('feed/_post'); -%>
+            </section>
+        </div>
+    
+
     </div>
+        
+    
 </div>
 
 
