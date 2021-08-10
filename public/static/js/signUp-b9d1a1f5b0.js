@@ -1,1 +1,0 @@
-var btn=$("button"),pass=$("#password"),rePass=$("#retype-password");btn.click((s=>{if(pass.val()!=rePass.val())return pass.addClass("boxSh-danger"),rePass.addClass("boxSh-danger"),s.preventDefault(),void btn.html("Passwords do not match")})),pass.click((()=>{pass.removeClass("boxSh-danger"),rePass.removeClass("boxSh-danger"),btn.html("Create Account")}));

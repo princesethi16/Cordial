@@ -25,7 +25,7 @@ for(let i = 0; i<friendRequestReplyBtns.length; i++ ){
 
 function replyToFriendRequest(btn){
     let reply = btn.attr('data-reply');
-    console.log(reply);
+    
         friendRequestAjax(btn,reply);
     return;
 }
@@ -47,8 +47,14 @@ function friendRequestAjax(btn,reply){
             let wholeElement = $(` #FriendRequestElement-${data.friendshipId}`);
             wholeElement.css('background-color','rgb(218, 233, 247)');
             if(reply == 'accept'){
-                let chatBox = addFriendToFriendsDiv(data.from_user,data.friendshipId);
+                let whole_chatBox = addFriendToFriendsDiv(data.from_user,data.friendshipId);
+                
+
                 new ChatEngine(`user-chat-box-${data.friendshipId}`,`${data.to_user.email}`,`${data.friendshipId}`);
+                console.log(whole_chatBox);
+                
+                chatBox = new ChatBoxBody(whole_chatBox);
+                chatBox.closeChatBox();
             }
         },
         error: function(error){
@@ -59,10 +65,10 @@ function friendRequestAjax(btn,reply){
 
 function addFriendToFriendsDiv(from_user,friendshipId){
     let targetDiv = $(' #right-friends-div');
-    return targetDiv.append(`
+    targetDiv.append(`
         <div class="text-start p-2 pe-3 mt-1 container d-flex justify-content-between" >
             <p class="mb-0 d-inline-block " style="max-width: 150px;">
-                <a class="text-decoration-none" href="profile/${from_user._id}" >
+                <a class="text-decoration-none" href="/users/profile/${from_user._id}" >
                     <img src="${from_user.avatar}" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
                     ${from_user.name}
                 </a>
@@ -112,5 +118,6 @@ function addFriendToFriendsDiv(from_user,friendshipId){
             </div>
         </div>
     `);
+    return targetDiv.children("div:last-child");
 }
 

@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 
-const sass = require('gulp-sass')(require('node-sass'));
+const sass = require('gulp-sass')(require('sass'));
 const minifyCss = require('gulp-minify-css');
 const rev = require('gulp-rev');
 const uglify = require('gulp-uglify');

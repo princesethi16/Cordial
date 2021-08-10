@@ -7,7 +7,7 @@
     if(friendship.friendship.to_user){ %>
         <div class="text-start p-2 pe-3 mt-1 container d-flex justify-content-between" >
             <p class="mb-0 d-inline-block " style="max-width: 150px;">
-                <a class="text-decoration-none" href="profile/<%= currFriend.id %>" >
+                <a class="text-decoration-none" href="/users/profile/<%= currFriend.id %>" >
                     <img src="<%= currFriend.avatar %>" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
                     <%= currFriend.name %>
                 </a>

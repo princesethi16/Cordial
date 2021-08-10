@@ -4,12 +4,12 @@ class ChatBoxBody{
         this.user = user;
     }
     closeChatBox(){
-        console.log(this.chatBox);
         let closeBtn = this.chatBox.find('.chat-box-close');
         console.log(closeBtn);
         closeBtn.click((e)=>{
             
             e.preventDefault();
+            console.log('close btn');
             this.chatBox.toggleClass('show')
         });
     }

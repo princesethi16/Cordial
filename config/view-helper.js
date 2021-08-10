@@ -4,11 +4,11 @@ const path = require('path');
 
 module.exports = (app) =>{
     app.locals.staticPath = function(filePath){
-        if(env.name == 'development'){
+    //     if(env.name == 'development'){
             return filePath;
-        }
+    //     }
 
-         console.log('/'+JSON.parse(fs.readFileSync(path.join(__dirname,'../public/rev-manifest.json')))[filePath]);
-        return '/' + JSON.parse(fs.readFileSync(path.join(__dirname,'../public/static/rev-manifest.json')))[filePath];
+    //      console.log('/'+JSON.parse(fs.readFileSync(path.join(__dirname,'../public/rev-manifest.json')))[filePath]);
+    //     return '/' + JSON.parse(fs.readFileSync(path.join(__dirname,'../public/static/rev-manifest.json')))[filePath];
     }
 }
