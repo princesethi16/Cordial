@@ -1,9 +1,9 @@
 const gulp = require('gulp');
 
-const sass = require('gulp-sass')(require('sass'));
+const sass = require('gulp-sass')(require('node-sass'));
 const minifyCss = require('gulp-minify-css');
 const rev = require('gulp-rev');
-const uglify = require('gulp-uglify-es').default;
+const uglify = require('gulp-uglify');
 const imagemin = require('gulp-imagemin');
 const del = require('del');
 
