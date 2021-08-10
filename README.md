@@ -25,5 +25,6 @@ Link to the website: http://35.154.113.130:8000/
 
 
 *Technology used: Mongo DB, Express.js, Node.js, CSS.
+
 *Libraries Used: Passport.js(for user authentication), EJS, SASS, socket.io Express-EJS-layout, Mongoose, 
                  Bootstrap, Gulp, noty.js , multer, Nodemailer, kue.js, passport-google-oauth, passport-jwt, socket.io, JsonWebToken. 
