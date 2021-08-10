@@ -128,9 +128,11 @@ input[type="text"],
 
 .body .bubble p {
   color: #f9fbff;
+  margin-bottom: 0%;
+  max-width: 350px;
   font-size: 14px;
   text-align: left;
-  line-height: 1.4; }
+  line-height: 1rem; }
 
 .body .incoming {
   text-align: left; }
