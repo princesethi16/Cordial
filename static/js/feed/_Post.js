@@ -44,6 +44,9 @@
 
     let createNewPostDOM = function(post,user){
         var commentString;
+        if(!(post.images)){
+            post.images = '';
+        }
         if(post.comments.length <= 1){
             commentString = "Comment";
         }else{
