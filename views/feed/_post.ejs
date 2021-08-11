@@ -1,7 +1,7 @@
 <% for(let i=posts.length - 1 ; i>=0 ; i--){ %>
 
     <div class="card w-100 mt-4 comment-card" id="post-<%= posts[i].id %>">
-        <div class="card-body text-start pb-0 pt-2">
+        <div class="card-body text-start pb-0 pt-2 position-relative">
             <div id="whole-post-<%= posts[i].id %>">
                 <img src="<%= posts[i].user.avatar %>" class="mb-4"
                 style="display: inline; height: 50px;width: 50px; border-radius: 50%;"
@@ -25,6 +25,10 @@
             <p class="card-text fs-6">
                 <%= posts[i].content %>
             </p>
+            <div class="mt-2 d-flex justify-content-center">
+                <img src="<%= posts[i].images %>" style="max-width: 400px; max-height: 500px;" class="card-img-top">
+            </div>
+            
             <!-- no fo  L C S -->
             <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
                 <span id="likes-span-<%= posts[i]._id%>">

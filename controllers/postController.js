@@ -7,31 +7,51 @@ const commentsMailer = require('../mailers/comments_mailer');
 const queue = require('../config/kue');
 const emailsWorker = require('../workers/comment_email_worker');
 
+const path = require('path');
+const fs = require('fs');
+
 module.exports.newPost = (req,res)=>{
-    let userName = req.user.name;
-    Post.create({
-        content: req.body.content,
-        user: req.user._id
-    },function(err,post){
-        if(err){
-            console.log("error in creating the post:", error);
-            return;
-        }
+    let userId = req.user._id;
+    console.log(req.file);
+    console.log(req.body);
+
+        Post.uploadedPostImages(req,res,function(err){
+            if(err){console.log('********Multer error:',err); return; }
+        
+            console.log(Post.ImagePath);
+            Post.create({
+                content: req.body.content,
+                user: userId
+            },function(err,post){
+                if(err){
+                    console.log("error in creating the post:", error);
+                    return;
+                }
+
+            if(req.file){
+                // path of uploaded image should be stored in post's db
+                post.images = Post.ImagePath + '/' + req.file.filename;
+            }
+
+            post.save();
+        
 
     
 
-        if(req.xhr){
-            return res.status(200).json({
-                post: post,
-                user: req.user,
-                message: "New post created",
+            if(req.xhr){
+                return res.status(200).json({
+                    post: post,
+                    user: req.user,
+                    message: "New post created",
 
-            });
-        }
+                });
+            }
 
 
 
-        return res.redirect('back');
+            return res.redirect('back');
+
+            })
     });
 }
 
@@ -62,7 +82,11 @@ module.exports.deletePost = (req,res)=>{
                 if(err){console.log('error in deleting post:',err); return;}
             });
 
-            
+            // delete the pic related to the post
+            if(post.images)
+                {
+                    fs.unlinkSync(path.join(__dirname,'..',post.images));
+                }
 
             if(req.xhr){
                 return res.status(200).json({

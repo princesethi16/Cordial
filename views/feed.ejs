@@ -26,8 +26,52 @@
                     </li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="btn btn-outline-primary">Profile</a>
-                    <a href="#" class="btn btn-info">Messages</a>
+                    <a href="/users/profile/<%= locals.user.id %>" class="btn btn-outline-primary">Profile</a>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" > Message </button>
+                    
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title" id="exampleModalLabel">Compose a message <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chat-quote-fill" viewBox="0 0 16 16">
+                                <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM7.194 6.766a1.688 1.688 0 0 0-.227-.272 1.467 1.467 0 0 0-.469-.324l-.008-.004A1.785 1.785 0 0 0 5.734 6C4.776 6 4 6.746 4 7.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.461 2.461 0 0 0-.227-.4zM11 9.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.466 2.466 0 0 0-.228-.4 1.686 1.686 0 0 0-.227-.273 1.466 1.466 0 0 0-.469-.324l-.008-.004A1.785 1.785 0 0 0 10.07 6c-.957 0-1.734.746-1.734 1.667 0 .92.777 1.666 1.734 1.666.343 0 .662-.095.931-.26z"/>
+                              </svg></h4>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="pt-4">
+                                    <% for(let friendship of userFriendships){ %>
+                                    <% let currFriend = friendship.friend; 
+                                    if(friendship.friendship.to_user){ %>
+                                        <div class="text-start p-2 pe-3 mt-1 container d-flex justify-content-between" >
+                                            <p class="mb-0 d-inline-block " style="max-width: 150px;">
+                                                <a class="text-decoration-none" href="/users/profile/<%= currFriend.id %>" >
+                                                    <img src="<%= currFriend.avatar %>" style="height: 30px;width: 30px; border-radius: 50%; margin-right: 10px;" alt="">
+                                                    <a class="" data-bs-toggle="collapse" href="#chat_box_collapse-<%= friendship.friendshipId %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        <%= currFriend.name %>
+                                                    </a>
+                                                </a>
+                                            </p>
+                                            <div class = "Container-btn" style="display: inline-block;">
+                                                <p class="mb-0">
+                                                    <a class="" data-bs-toggle="collapse" href="#chat_box_collapse-<%= friendship.friendshipId %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        <i class="fas fa-comments me-2"></i>
+                                                    </a>
+                                                  </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div>
 
@@ -60,6 +104,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 

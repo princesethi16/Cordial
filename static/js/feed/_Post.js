@@ -11,11 +11,14 @@
             e.preventDefault();
             
             let url = '/users/feed/post';
-
+            
+            var formData = new FormData($("#newPostForm")[0]);
             $.ajax({
                 type: 'post',
                 url: url,
-                data: form.serialize(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (data){
                     
                     let newPost = createNewPostDOM(data.post,data.user);
@@ -72,6 +75,9 @@
                     <p class="card-text fs-6">
                         ${post.content }
                     </p>
+                    <div class="mt-2 d-flex justify-content-center">
+                        <img src="${post.images}" style="max-width: 400px; max-height: 500px;" class="card-img-top">
+                    </div>
                     <!-- no fo  L C S -->
                     <p class=" border-top d-flex justify-content-between text-secondary pt-2 mb-0">
                         <span id="likes-span-${post._id}">${post.likes.length} Like</span>

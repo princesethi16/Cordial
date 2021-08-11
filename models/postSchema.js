@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 const User = require('./userSchema');
+const multer = require('multer');
+const path = require('path');
+const Image_Path = path.join('/uploads/posts/images');
 
 const postSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    images: {
+        type: String
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,6 +33,19 @@ const postSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
+
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname,'..',Image_Path));
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+// static functions
+postSchema.statics.uploadedPostImages = multer({storage: storage}).single('image');
+postSchema.statics.ImagePath = Image_Path;
 
 
 const Post = mongoose.model('Post',postSchema);
