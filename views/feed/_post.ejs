@@ -13,7 +13,7 @@
                         </span>
                         <% if(locals.user && locals.user.id==posts[i].user.id){ %>
                             <a class="delete-post-link" href="/users/feed/post/delete-post/<%= posts[i]._id %>">
-                                <span class="fw-bold fs-5">X</span>
+                                <span class="fw-bold fs-5 text-danger">X</span>
                             </a>
                             <% } %>
                     </h6>

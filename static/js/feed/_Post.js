@@ -63,7 +63,7 @@
                                     ${user.name}
                                 </span>
                                     <a class="delete-post-link" href="/users/feed/post/delete-post/${post._id}">
-                                        <span class="fw-bold fs-5">X</span>
+                                        <span class="fw-bold fs-5 text-danger">X</span>
                                     </a>
                                 
                             </h6>
