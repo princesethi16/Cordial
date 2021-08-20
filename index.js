@@ -20,8 +20,8 @@ const customMiddleware = require('./config/customMiddleware');
 const http = require('http');
 const chatServer = http.createServer(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
-chatServer.listen(3000);
-console.log('chatServer is listening on port:',3000);
+chatServer.listen(5000);
+console.log('chatServer is listening on port:',5000);
 
 
 // mailer for notifications
